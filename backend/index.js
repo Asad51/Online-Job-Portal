@@ -8,13 +8,15 @@ mongoose.Promise = require('bluebird');
 let app = require('./config/app.config');
 let config = require('./config/env.config');
 
-let port = config.port;
+let port = process.env.PORT || config.port;
 let dbUrl = config.dbUrl;
 
 /***** Request Handling *****/
-let errors = require('./routes/error.route');
+let errorsRoute = require('./routes/error.route');
+let jobSeekerRoute = require('./routes/job-seeker.route');
 
-app.use(errors);
+app.use('/user', jobSeekerRoute);
+app.use(errorsRoute);
 
 
 /***** Server Handling *****/

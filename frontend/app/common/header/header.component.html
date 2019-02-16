@@ -15,7 +15,7 @@
         <!-- Nav for all -->
         <ul class="nav navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/" routerLinkActive="active">Jobs</a>
+            <a class="nav-link">Jobs</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Employers</a>
@@ -27,27 +27,34 @@
 
         <!-- Nav for users -->
         <ul class="nav navbar-nav ml-auto">
-          <li *ngIf="!isJobSeekerLoggedIn && !isEmployerLoggedIn && !isAdminLoggedIn" class="nav-item">
-            <div class="nav-link" [matMenuTriggerFor]="loginRegisterModal"><i class="fa fa-user-plus"></i>
-              Register</div>
+          <li *ngIf="
+              !userAuthService.isJobSeekerLoggedIn() && !isEmployerLoggedIn && !isAdminLoggedIn
+            "
+            [matMenuTriggerFor]="loginRegisterModal" class="nav-item">
+            <div class="nav-link"><i class="fa fa-user-plus"></i> Register</div>
           </li>
 
-          <li *ngIf="!isJobSeekerLoggedIn && !isEmployerLoggedIn && !isAdminLoggedIn" class="nav-item">
-            <div class="nav-link" [matMenuTriggerFor]="loginRegisterModal"><i class="fa fa-user"></i> Login</div>
+          <li *ngIf="
+              !userAuthService.isJobSeekerLoggedIn() && !isEmployerLoggedIn && !isAdminLoggedIn
+            "
+            [matMenuTriggerFor]="loginRegisterModal" class="nav-item">
+            <div class="nav-link"><i class="fa fa-user"></i> Login</div>
           </li>
 
           <!-- Job Seekers Drop-down menu -->
-          <li *ngIf="isJobSeekerLoggedIn" class="nav-item dropdown"><a class="nav-link" data-toggle="dropdown" href="#"
-              role="button" aria-haspopup="true" aria-expanded="true"><i class="fa fa-bell"><sup class="badge text-white bg-primary">4</sup></i></a>
+          <li *ngIf="userAuthService.isJobSeekerLoggedIn()" class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true"><i
+                class="fa fa-bell"><sup class="badge text-white bg-primary">4</sup></i></a>
             <div class="dropdown-menu n-width">
-              <div class="dropdown-item" *ngFor="let notification of notifications">{{
-                notification }}</div>
+              <div class="dropdown-item" *ngFor="let notification of notifications">
+                {{ notification }}
+              </div>
             </div>
           </li>
 
-          <li *ngIf="isJobSeekerLoggedIn" class="nav-item dropdown">
+          <li *ngIf="userAuthService.isJobSeekerLoggedIn()" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-              aria-expanded="false"><i class="fa fa-user"></i> {{ userName }}</a>
+              aria-expanded="false"><i class="fa fa-user"></i> {{ userAuthService.userName }}</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="/"><i class="fa fa-edit"></i> Edit Resume</a>
               <a class="dropdown-item" href="/"><i class="fa fa-address-card"></i> View Resume</a>
@@ -57,15 +64,18 @@
               <a class="dropdown-item" href="/"><i class="fa fa-user-md"></i> Applied Jobs</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/"><i class="fa fa-key"></i> Change Password</a>
-              <a class="dropdown-item" href="/"><i class="fa fa-sign-out"></i> Logout</a>
+              <a class="dropdown-item" (click)="onJobSeekerLogout()"><i class="fa fa-sign-out"></i> Logout</a>
             </div>
           </li>
 
           <!-- Employer Drop-down menu -->
-          <li *ngIf="isEmployerLoggedIn" class="nav-item dropdown"><a class="nav-link" data-toggle="dropdown" href="#"
-              role="button" aria-haspopup="true" aria-expanded="true"><i class="fa fa-bell"><sup class="badge text-white bg-primary">4</sup></i></a>
+          <li *ngIf="isEmployerLoggedIn" class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true"><i
+                class="fa fa-bell"><sup class="badge text-white bg-primary">4</sup></i></a>
             <div class="dropdown-menu">
-              <div class="dropdown-item" *ngFor="let notification of notifications">{{ notification }}</div>
+              <div class="dropdown-item" *ngFor="let notification of notifications">
+                {{ notification }}
+              </div>
             </div>
           </li>
 
@@ -81,7 +91,7 @@
               <a class="dropdown-item" href="/"><i class="fa fa-address-book"></i> Applied Employees</a>
               <a class="dropdown-item" href="/"><i class="fa fa-user-md"></i> Posted Jobs</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/"><i class="fa fa-sign-out"></i> Logout</a>
+              <a class="dropdown-item"><i class="fa fa-sign-out"></i> Logout</a>
             </div>
           </li>
 
@@ -98,7 +108,6 @@
               <a class="dropdown-item" href="/"><i class="fa fa-sign-out"></i> Logout</a>
             </div>
           </li>
-
         </ul>
       </div>
     </nav>
@@ -118,10 +127,12 @@
       </p>
     </mat-card-content>
     <mat-card-actions class="mx-3">
-      <button mat-stroked-button color="primary" (click)="openJobSeekerLoginModal(jobSeekerLoginModal)">Sign
-        In</button>
-      <button class=" float-right" mat-stroked-button color="accent" (click)="openJobSeekerRegisterModal(jobSeekerRegisterModal)">Sign
-        Up</button>
+      <button mat-stroked-button color="primary" (click)="openJobSeekerLoginModal(loginModal)">
+        Sign In
+      </button>
+      <button class=" float-right" mat-stroked-button color="accent" (click)="openJobSeekerRegisterModal(registerModal)">
+        Sign Up
+      </button>
     </mat-card-actions>
   </mat-card>
 
@@ -136,33 +147,188 @@
       </p>
     </mat-card-content>
     <mat-card-actions class="mx-3">
-      <button mat-stroked-button color="primary" (click)="openJobSeekerLoginModal(jobSeekerLoginModal)">Sign
-        In</button>
-      <button class=" float-right" mat-stroked-button color="accent" (click)="openJobSeekerRegisterModal(jobSeekerRegisterModal)">Sign
-        Up</button>
+      <button mat-stroked-button color="primary" (click)="openEmployerLoginModal(loginModal)">
+        Sign In
+      </button>
+      <button class=" float-right" mat-stroked-button color="accent" (click)="openEmployerRegisterModal(registerModal)">
+        Sign Up
+      </button>
     </mat-card-actions>
   </mat-card>
 </mat-menu>
 
-<!-- Job Seeker Register Template -->
-<ng-template #jobSeekerRegisterModal>
+<!-- Register Template -->
+<ng-template #registerModal>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Please Login</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="closeJobSeekerRegisterModal()">
+    <h4 class="modal-title m-auto text-center">Create Account</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeRegisterModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    This is a first modal
-    <button type="button" class="btn btn-primary" (click)="openLoginModal(jobSeekerLoginModal)">Open second modal</button>
+    <div class="container">
+      <mat-card fxFlex="100%">
+        <mat-card-content>
+          <form [formGroup]="registerForm" (ngSubmit)="onRegistrationFormSubmit()" role="form" autocomplete="off"
+            fxFlex="100%" fxLayout="column" fxLayoutGap="20px">
+            <mat-form-field>
+              <input matInput type="text" name="username" id="username" placeholder="Username" formControlName="username"
+                required />
+              <mat-hint>Enter username</mat-hint>
+              <mat-error *ngIf="username.invalid && username.errors.minlength">
+                Username must be at least 4 characters long.
+              </mat-error>
+              <mat-error *ngIf="username.invalid && username.errors.required">
+                Username is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput type="text" name="name" id="name" placeholder="Your Name" formControlName="name" required />
+              <mat-hint>Enter your name</mat-hint>
+              <mat-error *ngIf="name.invalid && name.errors.minlength">
+                Name must be at least 4 characters long.
+              </mat-error>
+              <mat-error *ngIf="name.invalid && name.errors.required">
+                Name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput type="email" name="email" id="email" placeholder="Email" formControlName="email" required />
+              <mat-hint>Enter Valid Email</mat-hint>
+              <mat-error *ngIf="email.invalid && email.errors.email">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="email.invalid && email.errors.required">
+                Email is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput [type]="formHelpers.hide ? 'password' : 'text'" name="password" id="password" placeholder="Password"
+                formControlName="password" required />
+              <mat-icon matSuffix (click)="formHelpers.hide = !formHelpers.hide">{{
+                formHelpers.hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              <mat-hint>Enter Your Password</mat-hint>
+              <mat-error *ngIf="password.invalid && password.errors.minlength">
+                Password must be at least 6 characters long.
+              </mat-error>
+              <mat-error *ngIf="password.invalid && password.errors.required">
+                Password is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput [type]="formHelpers.hide ? 'password' : 'text'" name="confirmPassword" id="confirmPassword"
+                placeholder="Retype Password" formControlName="confirmPassword" required />
+              <mat-icon matSuffix (click)="formHelpers.hide = !formHelpers.hide">{{
+                formHelpers.hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              <mat-hint>Enter Your Password Again</mat-hint>
+              <mat-error *ngIf="
+                  confirmPassword.invalid && confirmPassword.errors.minlength
+                ">
+                Password must be at least 6 characters long.
+              </mat-error>
+              <mat-error *ngIf="
+                  confirmPassword.invalid && confirmPassword.errors.required
+                ">
+                Password is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="
+                  confirmPassword.invalid &&
+                  confirmPassword.errors.MatchPassword
+                ">
+                Passwords don't match
+              </mat-error>
+            </mat-form-field>
+
+            <mat-card-actions class="m-3">
+              <button type="submit" mat-flat-button color="primary" [disabled]="!registerForm.valid">
+                Sign Up
+              </button>
+              <button type="reset" mat-flat-button color="warn" class="float-right">
+                Reset
+              </button>
+            </mat-card-actions>
+          </form>
+        </mat-card-content>
+        <hr />
+        <mat-card-footer class="m-3">
+          <h5 class="d-inline">
+            Already have account
+            <span style="cursor: pointer" class="text-primary" (click)="openLoginModal(loginModal)">
+              Sign In
+            </span>
+          </h5>
+        </mat-card-footer>
+      </mat-card>
+    </div>
   </div>
 </ng-template>
 
-<ng-template #jobSeekerLoginModal>
+<!-- Login template -->
+<ng-template #loginModal>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Second modal</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)=" closeJobSeekerLoginModal()">
+    <h4 class="modal-title m-auto">Please Login</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeLoginModal()">
       <span aria-hidden="true">&times;</span>
     </button>
+  </div>
+  <div class="modal-body">
+    <div class="container">
+      <mat-card fxFlex="100%">
+        <mat-card-content>
+          <form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()" role="form" autocomplete="off" fxFlex="100%"
+            fxLayout="column" fxLayoutGap="20px">
+            <mat-form-field class="form-field">
+              <input matInput type="email" name="email" id="email" placeholder="Email" formControlName="email" required />
+              <mat-hint>Enter Valid Email</mat-hint>
+              <mat-error *ngIf="loginEmail.invalid && loginEmail.errors.email">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error *ngIf="loginEmail.invalid && loginEmail.errors.required">
+                Email is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+              <input matInput [type]="formHelpers.hide ? 'password' : 'text'" name="password" id="password" placeholder="Password"
+                formControlName="password" required />
+              <mat-icon matSuffix (click)="formHelpers.hide = !formHelpers.hide">{{
+                formHelpers.hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              <mat-hint>Enter Your Password</mat-hint>
+              <mat-error *ngIf="loginPassword.invalid && loginPassword.errors.minlength">
+                Password must be at least 6 characters long.
+              </mat-error>
+              <mat-error *ngIf="loginPassword.invalid && loginPassword.errors.required">
+                Password is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-card-actions class="m-3">
+              <button type="submit" mat-flat-button color="primary" [disabled]="!loginForm.valid">
+                Sign In
+              </button>
+              <button type="reset" mat-flat-button color="warn" class="float-right">
+                Reset
+              </button>
+            </mat-card-actions>
+          </form>
+        </mat-card-content>
+        <hr />
+        <mat-card-footer class="m-3">
+          <h5 class="d-inline">
+            Don't have account
+            <span style="cursor: pointer" class="text-primary" (click)="openRegisterModal(registerModal)">
+              Sign Up
+            </span>
+          </h5>
+        </mat-card-footer>
+      </mat-card>
+    </div>
   </div>
 </ng-template>

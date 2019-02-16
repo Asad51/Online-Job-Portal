@@ -31,7 +31,7 @@ export class UserService {
   }
 
   logout() {
-    return this.httpClient.post(
+    return this.httpClient.get(
       environment.apiUrl + "user/logout",
       this.options
     );

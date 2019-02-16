@@ -1,5 +1,12 @@
 import { Component, OnInit, TemplateRef } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+import { ToastrService } from "ngx-toastr";
+
+import { UserService } from "./../../core/http";
+import { PasswordValidator } from "./password-validator";
+import { UserAuthService } from "../../core/services";
 
 @Component({
   selector: "app-header",
@@ -7,9 +14,7 @@ import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
   styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent implements OnInit {
-  isJobSeekerLoggedIn = false;
-  isEmployerLoggedIn = false;
-  isAdminLoggedIn = false;
+  isEmployerIsSelected: Boolean = false;
 
   loginModal: BsModalRef | null;
   registerModal: BsModalRef | null;
@@ -18,37 +23,174 @@ export class HeaderComponent implements OnInit {
     "Asim has applied to your posted job id 1233",
     "Arif sent cv at job id 1002"
   ];
-  userName = "Asad";
 
-  constructor(private modalService: BsModalService) {}
+  registerForm: FormGroup;
+  loginForm: FormGroup;
+  formHelpers = null;
 
-  ngOnInit() {}
+  constructor(
+    private modalService: BsModalService,
+    private toastr: ToastrService,
+    private fb: FormBuilder,
+    private router: Router,
+    private userService: UserService,
+    private userAuthService: UserAuthService
+  ) {}
 
-  openJobSeekerLoginModal(template: TemplateRef<any>) {
-    this.loginModal = this.modalService.show(template, { class: "modal-sm" });
-  }
+  ngOnInit() {
+    this.formHelpers = {
+      hide: true
+    };
 
-  openJobSeekerRegisterModal(template: TemplateRef<any>) {
-    this.registerModal = this.modalService.show(template, {
-      class: "modal-sm"
+    this.registerForm = this.fb.group(
+      {
+        username: ["", [Validators.required, Validators.minLength(4)]],
+        name: ["", [Validators.required, Validators.minLength(4)]],
+        email: ["", [Validators.required, Validators.email]],
+        password: ["", [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ["", [Validators.required, Validators.minLength(6)]]
+      },
+      { validator: PasswordValidator.MatchPassword }
+    );
+
+    this.loginForm = this.fb.group({
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  closeJobSeekerLoginModal() {
-    if (!this.loginModal) {
+  onRegistrationFormSubmit() {
+    if (!this.registerForm.valid) {
+      return;
+    }
+    if (this.isEmployerIsSelected) {
+    } else {
+      this.userService.register(this.registerForm.value).subscribe(
+        data => {
+          this.toastr.success(data["success"]);
+          this.closeRegisterModal();
+        },
+        err => {
+          this.toastr.error(err.error["error"] || "Something went wrong.");
+        }
+      );
+    }
+  }
+
+  onLoginFormSubmit() {
+    if (!this.loginForm.valid) {
       return;
     }
 
-    this.loginModal.hide();
-    this.loginModal = null;
+    if (this.isEmployerIsSelected) {
+      console.log(this.loginForm.value);
+    } else {
+      this.userService.login(this.loginForm.value).subscribe(
+        data => {
+          this.closeLoginModal();
+          localStorage.setItem("__jsx__", data["token"]);
+          this.toastr.success(data["success"]);
+        },
+        err => {
+          this.toastr.error(err.error["error"] || "Something went wrong.");
+        }
+      );
+    }
   }
 
-  closeJobSeekerRegisterModal() {
+  onJobSeekerLogout() {
+    this.userService.logout().subscribe(
+      data => {
+        this.toastr.info(data["success"]);
+        localStorage.removeItem("__jsx__");
+      },
+      err => {
+        if (err.error["notLoggedIn"]) {
+          this.toastr.error(err.error["notLoggedIn"]);
+          localStorage.removeItem("__jsx__");
+        } else {
+          this.toastr.error(err.error["error"] || "Something went wrong.");
+        }
+      }
+    );
+  }
+
+  get username() {
+    return this.registerForm.get("username");
+  }
+
+  get name() {
+    return this.registerForm.get("name");
+  }
+
+  get email() {
+    return this.registerForm.get("email");
+  }
+
+  get password() {
+    return this.registerForm.get("password");
+  }
+  get confirmPassword() {
+    return this.registerForm.get("confirmPassword");
+  }
+
+  get loginEmail() {
+    return this.loginForm.get("email");
+  }
+
+  get loginPassword() {
+    return this.loginForm.get("password");
+  }
+
+  openJobSeekerRegisterModal(template: TemplateRef<any>) {
+    this.isEmployerIsSelected = false;
+    this.openRegisterModal(template);
+  }
+
+  openJobSeekerLoginModal(template: TemplateRef<any>) {
+    this.isEmployerIsSelected = false;
+    this.openLoginModal(template);
+  }
+
+  openEmployerRegisterModal(template: TemplateRef<any>) {
+    this.isEmployerIsSelected = true;
+    this.openRegisterModal(template);
+  }
+
+  openEmployerLoginModal(template: TemplateRef<any>) {
+    this.isEmployerIsSelected = true;
+    this.openLoginModal(template);
+  }
+
+  openRegisterModal(template: TemplateRef<any>) {
+    this.closeLoginModal();
+    this.registerModal = this.modalService.show(template, {
+      class: "modal-md"
+    });
+  }
+
+  openLoginModal(template: TemplateRef<any>) {
+    this.closeRegisterModal();
+    this.loginModal = this.modalService.show(template, {
+      class: "modal-md"
+    });
+  }
+
+  closeRegisterModal() {
     if (!this.registerModal) {
       return;
     }
-
+    this.registerForm.reset();
     this.registerModal.hide();
     this.registerModal = null;
+  }
+
+  closeLoginModal() {
+    if (!this.loginModal) {
+      return;
+    }
+    this.loginForm.reset();
+    this.loginModal.hide();
+    this.loginModal = null;
   }
 }

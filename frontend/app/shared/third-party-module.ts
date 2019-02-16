@@ -12,9 +12,8 @@ import {
   MatSelectModule,
   MatMenuModule
 } from "@angular/material";
-
-import { ModalModule } from "ngx-bootstrap";
-
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { ModalModule, BsDropdownModule } from "ngx-bootstrap";
 import { ToastrModule } from "ngx-toastr";
 
 @NgModule({
@@ -29,9 +28,14 @@ import { ToastrModule } from "ngx-toastr";
     MatPaginatorModule,
     MatSortModule,
     MatSelectModule,
-    ToastrModule,
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: "toast-top-right"
+    }),
     ModalModule,
-    MatMenuModule
+    MatMenuModule,
+    BsDropdownModule,
+    FlexLayoutModule
   ],
   exports: [
     MatInputModule,
@@ -46,7 +50,9 @@ import { ToastrModule } from "ngx-toastr";
     MatSelectModule,
     ToastrModule,
     ModalModule,
-    MatMenuModule
+    MatMenuModule,
+    BsDropdownModule,
+    FlexLayoutModule
   ]
 })
 export class ThirdPartyModule {}

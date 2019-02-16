@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
 
 import {
   BsModalService,
@@ -8,12 +9,14 @@ import {
 } from "ngx-bootstrap";
 
 import { UserService } from "./http";
+import { UserAuthService } from "./services";
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   providers: [
     UserService,
+    UserAuthService,
     BsModalService,
     ComponentLoaderFactory,
     PositioningService

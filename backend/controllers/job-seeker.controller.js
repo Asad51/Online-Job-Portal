@@ -4,6 +4,19 @@ const User = require("../models/job-seeker.model");
 const crypto = require("../libs/data-encryption");
 let secretKeys = require("../config/secret.key");
 
+function updateJobSeeker(conditions, user, res) {
+  User.updateOne(conditions, user, (err, result) => {
+    if (err || !result.n) {
+      return res.status(500).send({
+        error: "Server Error."
+      });
+    }
+    res.status(200).send({
+      "success": "Updated successfully."
+    });
+  });
+}
+
 module.exports = {
   register: async (req, res, next) => {
     if (Object.keys(req.body).length > 5) {
@@ -152,7 +165,161 @@ module.exports = {
     });
   },
 
-  updateProfile: async (req, res, next) => {
+  getProfileByUserName: async (req, res, next) => {
+    User.findOne({
+      username: req.params.username
+    }, 'name email fatherName motherName birthDate gender religion maritalStatus nationality nid imageUrl academicInfo experience skills', (err, user) => {
+      if (err) {
+        return res.status(500).send({
+          error: "Server Error."
+        });
+      }
 
+      if (!user) {
+        return res.status(404).send({
+          error: "No user found."
+        });
+      }
+      user.email = crypto.decrypt(user.email, secretKeys.userEmailKey);
+      res.status(200).send(user);
+    });
+  },
+
+  updateProfile: async (req, res, next) => {
+    if (Object.keys(req.body).length != 3) {
+      return res.status(400).send({
+        error: "Invalid Format."
+      });
+    }
+
+    req.checkBody("name", "Name is required.").notEmpty();
+    req.checkBody("name", "Name must be at 4 characters long.").isLength({
+      min: 4
+    });
+    req.checkBody("email", "Email is required.").notEmpty();
+    req.checkBody("email", "Enter valid email.").isEmail();
+
+    let errors = req.validationErrors();
+    if (errors) {
+      return res.status(422).send(errors);
+    }
+
+    let user = await User.findOne({
+      _id: res.locals.id
+    }, 'name email phone');
+    let email = crypto.encrypt(req.body.email.toLowerCase(), secretKeys.userEmailKey, secretKeys.userEmailIV);
+
+    if (user.email != email) {
+      user = await User.findOne({
+        email: email
+      }, 'name email phone');
+      if (user) {
+        return res.status(422).send({
+          error: "Email is already used."
+        });
+      }
+    }
+
+    if (phone != req.body.phone) {
+      user = await User.findOne({
+        phone: phone
+      }, 'name email phone');
+      if (user) {
+        return res.status(422).send({
+          error: "Phone is already used by another user."
+        });
+      }
+    }
+
+    user = {
+      name: req.body.name,
+      email: email,
+      phone: req.body.phone
+    }
+    updateJobSeeker({
+      _id: res.locals.id
+    }, user, res);
+  },
+
+  updatePersonalInfo: async (req, res, next) => {
+    let user = await User.findOne({
+      _id: res.locals.id
+    }, 'fatherName motherName birthDate gender religion maritalStatus nationality nid imageUrl');
+    for (let key of Object.keys(user)) {
+      user[key] = req.body[key] || user[key];
+    }
+
+    updateJobSeeker({
+      _id: res.locals.id
+    }, user, res);
+  },
+
+  updateOthers: async (req, res, next) => {
+    let user = await User.findOne({
+      _id: res.locals.id
+    }, 'academicInfo experience skills');
+
+    for (let key of Object.keys(user)) {
+      if (!req.body[key] || req.body[key].length <= 0) {
+        user[key] = user[key] || req.body[key];
+      } else {
+        user[key] = req.body[key];
+      }
+    }
+
+    updateJobSeeker({
+      _id: res.locals.id
+    }, user, res);
+  },
+
+  updatePassword: async (req, res, next) => {
+    let user = await User.findOne({
+      _id: res.locals.id
+    }, 'password');
+
+    req.checkBody("newPassword", "Password is required.").notEmpty();
+    req.checkBody("newPassword", "Password must be 6 character long.").isLength({
+      min: 6
+    });
+    let password = req.body.newPassword;
+    req.checkBody("confirmPassword", "Please retype password.").notEmpty();
+    req
+      .checkBody("confirmPassword", "Please confirm password.")
+      .equals(password);
+
+    let errors = req.validationErrors();
+    if (errors) {
+      return res.status(422).send(errors);
+    }
+
+    let oldPassword = crypto.decrypt(user.password, secretKeys.userPasswordKey);
+
+    if (req.body.oldPassword != oldPassword) {
+      return res.status(400).send({
+        error: "Incorrect Password"
+      });
+    }
+
+    updateJobSeeker({
+      _id: res.locals.id
+    }, {
+      password: crypto.encrypt(req.body.newPassword, secretKeys.userPasswordKey)
+    }, res);
+  },
+
+  deleteAccount: (req, res, next) => {
+    User.deleteOne({
+      _id: res.locals.id
+    }, (err) => {
+      if (err) {
+        return res.status(500).send({
+          error: "Server Error."
+        });
+      } else {
+        res.status(200).send({
+          success: "User deleted."
+        });
+      }
+    })
   }
 };

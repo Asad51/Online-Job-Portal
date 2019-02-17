@@ -56,15 +56,13 @@
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
               aria-expanded="false"><i class="fa fa-user"></i> {{ userAuthService.userName }}</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="/"><i class="fa fa-edit"></i> Edit Resume</a>
-              <a class="dropdown-item" href="/"><i class="fa fa-address-card"></i> View Resume</a>
-              <a class="dropdown-item" href="/"><i class="fa fa-envelope"></i> Email Resume</a>
+              <a class="dropdown-item" routerLink="/user/dashboard"><i class="fa fa-user-alt"></i> Dashboard</a>
+              <a class="dropdown-item" routerLink="/user/dashboard/edit"><i class="fa fa-edit"></i> Edit Profile</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/"><i class="fa fa-address-book"></i> Following Employees</a>
               <a class="dropdown-item" href="/"><i class="fa fa-user-md"></i> Applied Jobs</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/"><i class="fa fa-key"></i> Change Password</a>
-              <a class="dropdown-item" (click)="onJobSeekerLogout()"><i class="fa fa-sign-out"></i> Logout</a>
+              <div class="dropdown-item" (click)="onJobSeekerLogout()"><i class="fa fa-power-off"></i> Logout</div>
             </div>
           </li>
 

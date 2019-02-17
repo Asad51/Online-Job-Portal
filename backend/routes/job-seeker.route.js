@@ -5,7 +5,7 @@ let secretKeys = require('../config/secret.key');
 let jobSeekerController = require('../controllers/job-seeker.controller');
 
 function isUserAuthenticated(req, res, next) {
-  let token = req.headers['__u_x__'];
+  let token = req.headers['__jsx__'];
 
   if (!token) {
     return res.status(401).send({
@@ -34,6 +34,12 @@ app.post('/login', jobSeekerController.login);
 app.get('/logout', jobSeekerController.logout);
 
 app.route('/profile')
-  .get(isUserAuthenticated, jobSeekerController.getProfile);
+  .get(isUserAuthenticated, jobSeekerController.getProfile)
+  .put(isUserAuthenticated, jobSeekerController.updateProfile)
+  .delete(isUserAuthenticated, jobSeekerController.deleteAccount);
+
+app.put('/personal', isUserAuthenticated, jobSeekerController.updatePersonalInfo);
+app.put('/others', isUserAuthenticated, jobSeekerController.updateOthers);
+app.put('/password', isUserAuthenticated, jobSeekerController.updatePassword);
 
 module.exports = app;

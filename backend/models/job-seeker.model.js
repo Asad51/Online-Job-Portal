@@ -16,41 +16,62 @@ let userSchema = mongoose.Schema({
   password: {
     type: String
   },
-  personalInfo: {
-    fatherName: {
+  fatherName: {
+    type: String
+  },
+  motherName: {
+    type: String
+  },
+  birthDate: {
+    type: Date
+  },
+  gender: {
+    type: String
+  },
+  religion: {
+    type: String
+  },
+  maritalStatus: {
+    type: String
+  },
+  nationality: {
+    type: String
+  },
+  nid: {
+    type: Number
+  },
+  imageUrl: {
+    type: String
+  },
+  academicInfo: [{
+    degree: {
       type: String
     },
-    motherName: {
+    institute: {
       type: String
     },
-    birthDate: {
-      type: Date
-    },
-    gender: {
+    section: {
       type: String
     },
-    religion: {
-      type: String
-    },
-    username: {
-      type: String
-    },
-    maritalStatus: {
-      type: String
-    },
-    nationality: {
-      type: String
-    },
-    nid: {
+    passing: {
       type: Number
     },
-    nationality: {
+    cgpa: {
+      type: Number
+    }
+  }],
+  experience: [{
+    company: {
       type: String
     },
-    imageUrl: {
+    type: {
       type: String
+    },
+    duration: {
+      type: Number
     }
-  }
+  }],
+  skills: [String]
 });
 
 module.exports = mongoose.model("user", userSchema);

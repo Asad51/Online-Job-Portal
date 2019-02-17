@@ -1,11 +1,19 @@
-@import '../node_modules/bootstrap/scss/bootstrap.scss';
-@import '../node_modules/font-awesome/css/font-awesome.min.css';
+@import "./assets/scss/variables";
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+@import "./assets/scss/globals";
+@import "./assets/scss/utilities";
+
+@import "./assets/scss/navs.scss";
+@import "./assets/scss/error.scss";
+
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.css";
 
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 @import "../node_modules/ngx-toastr/toastr-bs4-alert.scss";
 
-#toast-container>div {
+#toast-container > div {
   opacity: 1;
 }
 

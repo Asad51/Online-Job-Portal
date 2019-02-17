@@ -1,0 +1,99 @@
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center mt-3 d-sm-inline d-md-inline">
+      <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-block">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/user/dashboard" routerLinkActive="active">
+        <i class="fa fa-tachometer-alt"></i>
+        <span>Dashboard</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Profile items -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
+        aria-controls="collapseTwo">
+        <i class="fa fa-user"></i>
+        <span>Profile</span>
+      </a>
+      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-light py-2 collapse-inner rounded">
+          <a class="collapse-item" routerLink="view"><i class="fa fa-user-alt"></i> Profile Details</a>
+          <a class="collapse-item" routerLink="edit"><i class="fa fa-edit"></i> Edit Profile</a>
+          <a class="collapse-item" routerLink="image"><i class="fa fa-cloud-upload-alt"></i> Upload Profile Image</a>
+          <a class="collapse-item" routerLink="password"><i class="fa fa-exchange-alt"></i> Change Password</a>
+        </div>
+      </div>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="upload">
+        <i class="fa fa-file-upload"></i>
+        <span> Upload Resume</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="email">
+        <i class="fa fa-envelope"></i>
+        <span> Email Resume</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+    <!-- Job items -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#jobsCollapse" aria-expanded="true"
+        aria-controls="jobsCollapse">
+        <i class="fa fa-tasks"></i>
+        <span> Jobs</span>
+      </a>
+      <div id="jobsCollapse" class="collapse" aria-labelledby="jobLists" data-parent="#accordionSidebar">
+        <div class="bg-white text-white py-2 collapse-inner rounded">
+          <a class="collapse-item" routerLink="/user/dashboard">
+            <i class="fa fa-list-alt"></i>
+            <span> Applied Jobs</span></a>
+          <a class="collapse-item" routerLink="/user/dashboard">
+            <i class="fa fa-list"></i>
+            <span> Recommended Jobs</span></a>
+
+          <a class="collapse-item" routerLink="/user/dashboard">
+            <i class="fa fa-bookmark"></i>
+            <span> Bookmarked Jobs</span></a>
+        </div>
+      </div>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/user/dashboard">
+        <i class="fa fa-street-view"></i>
+        <span>My Profile Viewed</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/user/dashboard">
+        <i class="fa fa-users"></i>
+        <span>Following Employees</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+      <a style="cursor: pointer;" class="nav-link" (click)="onLogout()">
+        <i class="fa fa-sign-out-alt"></i>
+        <span>Logout</span></a>
+    </li>
+
+  </ul>
+  <!-- End of Sidebar -->
+  <router-outlet></router-outlet>
+</div>

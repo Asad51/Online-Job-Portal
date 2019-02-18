@@ -5,7 +5,8 @@ import { HttpClientModule } from "@angular/common/http";
 import {
   BsModalService,
   ComponentLoaderFactory,
-  PositioningService
+  PositioningService,
+  BsDatepickerConfig
 } from "ngx-bootstrap";
 
 import { UserService } from "./http";
@@ -19,7 +20,8 @@ import { UserAuthService } from "./services";
     UserAuthService,
     BsModalService,
     ComponentLoaderFactory,
-    PositioningService
+    PositioningService,
+    BsDatepickerConfig
   ]
 })
 export class CoreModule {}

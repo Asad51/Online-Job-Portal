@@ -1,77 +1,52 @@
 const mongoose = require("mongoose");
 
 let userSchema = mongoose.Schema({
-  username: {
-    type: String
+  username: String,
+  name: String,
+  phone: String,
+  email: String,
+  termsAgreement: Boolean,
+  password: String,
+  fatherName: String,
+  motherName: String,
+  birthDate: Date,
+  gender: String,
+  religion: String,
+  maritalStatus: String,
+  nationality: String,
+  nid: Number,
+  imageUrl: String,
+  currentAddress: {
+    street: String,
+    city: String,
+    zipCode: Number
   },
-  name: {
-    type: String
-  },
-  email: {
-    type: String
-  },
-  termsAgreement: {
-    type: Boolean
-  },
-  password: {
-    type: String
-  },
-  fatherName: {
-    type: String
-  },
-  motherName: {
-    type: String
-  },
-  birthDate: {
-    type: Date
-  },
-  gender: {
-    type: String
-  },
-  religion: {
-    type: String
-  },
-  maritalStatus: {
-    type: String
-  },
-  nationality: {
-    type: String
-  },
-  nid: {
-    type: Number
-  },
-  imageUrl: {
-    type: String
+  permanentAddress: {
+    street: String,
+    city: String,
+    zipCode: Number
   },
   academicInfo: [{
-    degree: {
-      type: String
-    },
-    institute: {
-      type: String
-    },
-    section: {
-      type: String
-    },
-    passing: {
-      type: Number
-    },
-    cgpa: {
-      type: Number
-    }
+    examTitle: String,
+    major: String,
+    institute: String,
+    result: Number,
+    passingYear: Number,
+    duration: Number,
+    board: String
   }],
   experience: [{
-    company: {
-      type: String
-    },
-    type: {
-      type: String
-    },
-    duration: {
-      type: Number
-    }
+    orgName: String,
+    position: String,
+    joinDate: Date,
+    resignDate: Date,
+    salary: Number
   }],
-  skills: [String]
+  skills: [String],
+  contactInfo: [{
+    contactName: String,
+    contact: String
+  }]
 });
 
 module.exports = mongoose.model("user", userSchema);

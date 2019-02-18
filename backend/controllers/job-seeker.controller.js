@@ -4,8 +4,8 @@ const User = require("../models/job-seeker.model");
 const crypto = require("../libs/data-encryption");
 let secretKeys = require("../config/secret.key");
 
-function updateJobSeeker(conditions, user, res) {
-  User.updateOne(conditions, user, (err, result) => {
+function updateJobSeeker(conditions, user, options, res) {
+  User.updateOne(conditions, user, options, (err, result) => {
     if (err || !result.n) {
       return res.status(500).send({
         error: "Server Error."
@@ -150,18 +150,17 @@ module.exports = {
   },
 
   getProfile: async (req, res, next) => {
-    User.findById(res.locals.id, 'username name email', (err, user) => {
+    User.findById(res.locals.id, {
+      username: 0,
+      password: 0
+    }, (err, user) => {
       if (err || !user) {
         return res.status(500).send({
           error: "Server Error."
         });
       }
-
-      res.status(200).send({
-        username: user.username,
-        name: user.name,
-        email: crypto.decrypt(user.email, secretKeys.userEmailKey)
-      });
+      user.email = crypto.decrypt(user.email, secretKeys.userEmailKey);
+      res.status(200).send(user);
     });
   },
 
@@ -186,18 +185,18 @@ module.exports = {
   },
 
   updateProfile: async (req, res, next) => {
-    if (Object.keys(req.body).length != 3) {
+    if (Object.keys(req.body).length > 9) {
       return res.status(400).send({
         error: "Invalid Format."
       });
     }
-
+    console.log(req.body.birthDate);
     req.checkBody("name", "Name is required.").notEmpty();
     req.checkBody("name", "Name must be at 4 characters long.").isLength({
       min: 4
     });
-    req.checkBody("email", "Email is required.").notEmpty();
-    req.checkBody("email", "Enter valid email.").isEmail();
+    req.checkBody("birthDate", "Birth Date is required.").notEmpty();
+    req.checkBody("nationality", "Nationality is required.").notEmpty();
 
     let errors = req.validationErrors();
     if (errors) {
@@ -206,39 +205,26 @@ module.exports = {
 
     let user = await User.findOne({
       _id: res.locals.id
-    }, 'name email phone');
-    let email = crypto.encrypt(req.body.email.toLowerCase(), secretKeys.userEmailKey, secretKeys.userEmailIV);
+    }, {
+      password: 0
+    });
 
-    if (user.email != email) {
-      user = await User.findOne({
-        email: email
-      }, 'name email phone');
-      if (user) {
-        return res.status(422).send({
-          error: "Email is already used."
-        });
-      }
-    }
-
-    if (phone != req.body.phone) {
-      user = await User.findOne({
-        phone: phone
-      }, 'name email phone');
-      if (user) {
-        return res.status(422).send({
-          error: "Phone is already used by another user."
-        });
-      }
-    }
-
-    user = {
+    newUser = {
       name: req.body.name,
-      email: email,
-      phone: req.body.phone
+      fatherName: req.body.fatherName || user.fatherName,
+      motherName: req.body.motherName || user.motherName,
+      gender: req.body.gender || user.gender,
+      birthDate: req.body.birthDate,
+      religion: req.body.religion || user.religion,
+      maritalStatus: req.body.maritalStatus || user.maritalStatus,
+      nationality: req.body.nationality,
+      nid: req.body.nid || user.nid
     }
     updateJobSeeker({
       _id: res.locals.id
-    }, user, res);
+    }, newUser, {
+      new: true
+    }, res);
   },
 
   updatePersonalInfo: async (req, res, next) => {

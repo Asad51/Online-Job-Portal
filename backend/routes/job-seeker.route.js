@@ -6,7 +6,6 @@ let jobSeekerController = require('../controllers/job-seeker.controller');
 
 function isUserAuthenticated(req, res, next) {
   let token = req.headers['__jsx__'];
-
   if (!token) {
     return res.status(401).send({
       error: ['You are not logged in.']

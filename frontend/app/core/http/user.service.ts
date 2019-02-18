@@ -9,7 +9,9 @@ export class UserService {
   private options: Object = {
     observe: "body",
     withCredentials: true,
-    headers: new HttpHeaders().append("Content-Type", "application/json")
+    headers: new HttpHeaders()
+      .append("Content-Type", "application/json")
+      .append("__jsx__", localStorage.getItem("__jsx__"))
   };
 
   constructor(private httpClient: HttpClient) {}
@@ -38,8 +40,16 @@ export class UserService {
   }
 
   getProfile() {
-    return this.httpClient.post(
+    return this.httpClient.get(
       environment.apiUrl + "user/profile",
+      this.options
+    );
+  }
+
+  updateProfile(userInfo) {
+    return this.httpClient.put(
+      environment.apiUrl + "user/profile",
+      userInfo,
       this.options
     );
   }

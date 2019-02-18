@@ -11,25 +11,27 @@
       <div class="card-body">
         <div class="row border rounded">
           <div class="col-md-10 col-sm-9">
-            <div class="row job-seeker-name">Md. Asadul Islam</div>
+            <div class="row job-seeker-name">{{ user.name }}</div>
             <div class="row">
               <div class="col-4">Address</div>
               <div class="col-1">:</div>
-              <div class="col">Bahuka, Sirajganj Sadar, Sirajganj</div>
+              <div class="col" *ngIf="user.currentAddress">{{ user.currentAddress['street'] }}, {{
+                user.currentAddress['city'] }}, {{
+                user.currentAddress['zipCode'] }}.</div>
             </div>
             <div class="row">
               <div class="col-4">Mobile No.</div>
               <div class="col-1">:</div>
-              <div class="col">+8801767530221</div>
+              <div class="col">+880 {{ user.phone }}</div>
             </div>
             <div class="row">
               <div class="col-4">Email</div>
               <div class="col-1">:</div>
-              <div class="col">asad.cse.ru.15@gmail.com</div>
+              <div class="col">{{ user.email }}</div>
             </div>
           </div>
           <div class="col-md-2 col-sm-3">
-            <img class="p-1" width="100%" src="https://mybdjobs.bdjobs.com/mybdjobs/images/male.png" alt="Md. Asadul Islam" />
+            <img class="p-1" width="100%" src="https://mybdjobs.bdjobs.com/mybdjobs/images/male.png" alt="{{ user. name }}" />
           </div>
         </div>
 
@@ -52,7 +54,7 @@
             <div class="row">
               <div class="col-5 text-right">Birth Date</div>
               <div class="col-1">:</div>
-              <div class="col">{{ user.birthDate }}</div>
+              <div class="col">{{ user.birthDate | date }}</div>
             </div>
             <div class="row">
               <div class="col-5 text-right">Gender</div>
@@ -82,12 +84,14 @@
             <div class="row">
               <div class="col-5 text-right">Current Address</div>
               <div class="col-1">:</div>
-              <div class="col">{{ user.currentAddress }}</div>
+              <div class="col">{{ user.currentAddress['street'] }}, {{ user.currentAddress['city'] }}, {{
+                user.currentAddress['zipCode'] }}.</div>
             </div>
             <div class="row">
               <div class="col-5 text-right">Permanent Address</div>
               <div class="col-1">:</div>
-              <div class="col">{{ user.permanentAddress }}</div>
+              <div class="col">{{ user.permanentAddress['street'] }}, {{ user.permanentAddress['city'] }}, {{
+                user.permanentAddress['zipCode'] }}.</div>
             </div>
           </div>
         </div>
@@ -109,7 +113,7 @@
               <th>Board/University</th>
             </thead>
             <tbody>
-              <tr *ngFor="let eduInfo of academicInfo">
+              <tr *ngFor="let eduInfo of user.academicInfo">
                 <td>{{ eduInfo.examTitle }}</td>
                 <td>{{ eduInfo.major }}</td>
                 <td>{{ eduInfo.institute }}</td>
@@ -172,13 +176,13 @@
                 <td>
                   Email
                 </td>
-                <td> asad.cse.ru.15@gmail.com </td>
+                <td> {{ user.email }} </td>
               </tr>
               <tr>
                 <td>
                   Phone
                 </td>
-                <td> 01726622553</td>
+                <td> +880 {{ user.phone }}</td>
               </tr>
               <tr *ngFor="let contactInfo of user.contactInfo">
                 <td>{{ contactInfo.contactName }}</td>

@@ -53,4 +53,20 @@ export class UserService {
       this.options
     );
   }
+
+  updateContactInfo(contactInfo) {
+    return this.httpClient.put(
+      environment.apiUrl + "user/contact",
+      contactInfo,
+      this.options
+    );
+  }
+
+  updateAddress(address) {
+    return this.httpClient.put(
+      environment.apiUrl + "user/address",
+      address,
+      this.options
+    );
+  }
 }

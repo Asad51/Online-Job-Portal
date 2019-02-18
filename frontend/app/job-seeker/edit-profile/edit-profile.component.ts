@@ -10,9 +10,10 @@ import { UserService } from "../../core/http";
   styleUrls: ["./edit-profile.component.scss"]
 })
 export class EditProfileComponent implements OnInit {
-  panelOpenState = false;
+  panelOpenState = true;
   personalInfoForm: FormGroup;
-  passwordChangeForm: FormGroup;
+  contactInfoForm: FormGroup;
+  addressForm: FormGroup;
   user: Object = null;
 
   constructor(
@@ -25,11 +26,38 @@ export class EditProfileComponent implements OnInit {
       fatherName: [""],
       motherName: [""],
       gender: [""],
-      birthDate: ["", [Validators.required]],
+      birthDate: [new Date(""), [Validators.required]],
       religion: [""],
       maritalStatus: [""],
       nationality: ["", [Validators.required]],
       nid: ["", [Validators.pattern(/^\d{13}$|^\d{17}$/)]]
+    });
+
+    this.contactInfoForm = fb.group({
+      email: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          Validators.pattern(
+            /^\w+[a-z0-9._]{3,30}@[a-z0-9-_]{2,20}.[a-z]{2,15}$/i
+          )
+        ]
+      ],
+      phone: ["", [Validators.required, Validators.pattern(/^1\d{9}$/)]]
+    });
+
+    this.addressForm = this.fb.group({
+      currentAddress: this.fb.group({
+        street: ["", [Validators.required]],
+        city: ["", [Validators.required]],
+        zipCode: ["", [Validators.required, Validators.pattern(/^\w{4}$/)]]
+      }),
+      permanentAddress: this.fb.group({
+        street: ["", [Validators.required]],
+        city: ["", [Validators.required]],
+        zipCode: ["", [Validators.required, Validators.pattern(/^\w{4}$/)]]
+      })
     });
   }
 
@@ -50,6 +78,26 @@ export class EditProfileComponent implements OnInit {
         this.maritalStatus.setValue(data["maritalStatus"] || "");
         this.nationality.setValue(data["nationality"] || "");
         this.nid.setValue(data["nid"] || "");
+        this.email.setValue(data["email"] || "");
+        this.phone.setValue(data["phone"] || "");
+        this.currentAddress
+          .get("street")
+          .setValue(data["currentAddress"].street || "");
+        this.currentAddress
+          .get("city")
+          .setValue(data["currentAddress"].city || "");
+        this.currentAddress
+          .get("zipCode")
+          .setValue(data["currentAddress"].zipCode || "");
+        this.permanentAddress
+          .get("street")
+          .setValue(data["currentAddress"].street || "");
+        this.permanentAddress
+          .get("city")
+          .setValue(data["currentAddress"].city || "");
+        this.permanentAddress
+          .get("zipCode")
+          .setValue(data["currentAddress"].zipCode || "");
       },
       err => {
         this.toastr.error(
@@ -65,8 +113,51 @@ export class EditProfileComponent implements OnInit {
     if (!this.personalInfoForm.valid) {
       return;
     }
+    this.personalInfoForm.value.birthDate.setMinutes(
+      this.personalInfoForm.value.birthDate.getMinutes() -
+        this.personalInfoForm.value.birthDate.getTimezoneOffset()
+    );
 
     this.userService.updateProfile(this.personalInfoForm.value).subscribe(
+      data => {
+        this.toastr.success(data["success"]);
+        this.getUserData();
+      },
+      err => {
+        this.toastr.error(
+          err.error["notLoggedIn"] ||
+            err.error["error"] ||
+            "Something went wrong"
+        );
+      }
+    );
+  }
+
+  onContactInfoFormSubmit() {
+    if (!this.contactInfoForm.valid) {
+      return;
+    }
+
+    this.userService.updateContactInfo(this.contactInfoForm.value).subscribe(
+      data => {
+        this.toastr.success(data["success"]);
+        this.getUserData();
+      },
+      err => {
+        this.toastr.error(
+          err.error["notLoggedIn"] ||
+            err.error["error"] ||
+            "Something went wrong"
+        );
+      }
+    );
+  }
+
+  onAddressFormSubmit() {
+    if (!this.addressForm.valid) {
+      return;
+    }
+    this.userService.updateAddress(this.addressForm.value).subscribe(
       data => {
         this.toastr.success(data["success"]);
         this.getUserData();
@@ -115,5 +206,21 @@ export class EditProfileComponent implements OnInit {
 
   get nid() {
     return this.personalInfoForm.get("nid");
+  }
+
+  get email() {
+    return this.contactInfoForm.get("email");
+  }
+
+  get phone() {
+    return this.contactInfoForm.get("phone");
+  }
+
+  get currentAddress() {
+    return this.addressForm.get("currentAddress");
+  }
+
+  get permanentAddress() {
+    return this.addressForm.get("permanentAddress");
   }
 }

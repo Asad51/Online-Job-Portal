@@ -227,17 +227,74 @@ module.exports = {
     }, res);
   },
 
-  updatePersonalInfo: async (req, res, next) => {
+  updateContactInfo: async (req, res, next) => {
+    if (Object.keys(req.body).length != 2) {
+      return res.status(400).send({
+        error: "Invalid data format."
+      });
+    }
+    req.checkBody('email', 'Email is required.').notEmpty();
+    req.checkBody('email', "Enter valid email.").isEmail();
+    req.checkBody('phone', 'Phone number is required.').notEmpty();
+    let errors = req.validationErrors();
+    if (errors) {
+      return res.status(422).send(errors);
+    }
+
     let user = await User.findOne({
       _id: res.locals.id
-    }, 'fatherName motherName birthDate gender religion maritalStatus nationality nid imageUrl');
-    for (let key of Object.keys(user)) {
-      user[key] = req.body[key] || user[key];
+    }, 'email phone');
+    let email = crypto.encrypt(req.body.email, secretKeys.userEmailKey, secretKeys.userEmailIV);
+    if (email != user.email) {
+      let checkEmail = await User.findOne({
+        email: email
+      });
+      if (checkEmail) {
+        res.status(422).send({
+          error: "Email is already used."
+        });
+      }
+    }
+
+    if (req.body.phone != user.phone) {
+      let checkPhone = await User.findOne({
+        phone: req.body.phone
+      });
+      if (checkPhone) {
+        res.status(422).send({
+          error: "Phone is already used."
+        });
+      }
     }
 
     updateJobSeeker({
       _id: res.locals.id
-    }, user, res);
+    }, {
+      email: email,
+      phone: req.body.phone
+    }, {
+      new: true
+    }, res);
+  },
+
+  updateAddress: async (req, res, next) => {
+    if (Object.keys(req.body).length != 2) {
+      return res.status(400).send({
+        error: "Invalid data format."
+      });
+    }
+    let user = await User.findOne({
+      _id: res.locals.id
+    }, 'currentAddress permanentAddress');
+
+    updateJobSeeker({
+      _id: res.locals.id
+    }, {
+      currentAddress: req.body.currentAddress || user.currentAddress,
+      permanentAddress: req.body.permanentAddress || user.permanentAddress
+    }, {
+      new: true
+    }, res);
   },
 
   updateOthers: async (req, res, next) => {
@@ -255,7 +312,9 @@ module.exports = {
 
     updateJobSeeker({
       _id: res.locals.id
-    }, user, res);
+    }, user, {
+      new: true
+    }, res);
   },
 
   updatePassword: async (req, res, next) => {

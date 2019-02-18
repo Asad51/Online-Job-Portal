@@ -37,7 +37,8 @@ app.route('/profile')
   .put(isUserAuthenticated, jobSeekerController.updateProfile)
   .delete(isUserAuthenticated, jobSeekerController.deleteAccount);
 
-app.put('/personal', isUserAuthenticated, jobSeekerController.updatePersonalInfo);
+app.put('/contact', isUserAuthenticated, jobSeekerController.updateContactInfo);
+app.put('/address', isUserAuthenticated, jobSeekerController.updateAddress);
 app.put('/others', isUserAuthenticated, jobSeekerController.updateOthers);
 app.put('/password', isUserAuthenticated, jobSeekerController.updatePassword);
 

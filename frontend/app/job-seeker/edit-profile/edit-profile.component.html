@@ -4,10 +4,10 @@
     <mat-tab label="Personal">
       <mat-accordion>
         <!-- Personal data -->
-        <mat-expansion-panel class="m-3">
+        <mat-expansion-panel [expanded]="panelOpenState" class="m-3">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <i class="material-icons">account_circle</i>
+              <i class="material-icons mr-2">account_circle</i>
               Personal Information
             </mat-panel-title>
             <mat-panel-description>
@@ -121,28 +121,146 @@
           </mat-card>
         </mat-expansion-panel>
 
-        <!-- change password -->
+        <!-- Contact Information -->
         <mat-expansion-panel class="m-3">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              Login Data
+              <i class="material-icons mr-2">contact_mail</i>
+              Contact Information
             </mat-panel-title>
             <mat-panel-description>
-              Edit Login Information
+              Edit Contact Information
             </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <form>
-            <mat-form-field>
-              <input matInput placeholder="First name" />
-            </mat-form-field>
+          <mat-card fxFlex="100%">
+            <mat-card-content>
+              <form [formGroup]="contactInfoForm" (ngSubmit)="onContactInfoFormSubmit()" role="form" autocomplete="off"
+                fxFlex="100%" fxLayout="column" fxLayoutGap="20px">
 
-            <mat-form-field>
-              <input matInput placeholder="Age" />
-            </mat-form-field>
-          </form>
+                <mat-form-field class="form-field">
+                  <span matPrefix> &nbsp;</span>
+                  <input matInput type="email" name="email" id="email" placeholder="Email" formControlName="email" />
+                  <mat-icon matSuffix>email</mat-icon>
+                  <mat-hint>Enter Your Email</mat-hint>
+                  <mat-error *ngIf="email.invalid && email.errors.required">
+                    Email is <strong>required</strong>
+                  </mat-error>
+                  <mat-error *ngIf="email.invalid && (email.errors.email || email.errors.pattern)">
+                    Enter Valid Email.
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-field">
+                  <span matPrefix>+880 &nbsp;</span>
+                  <input type="tel" name="phone" id="phone" matInput placeholder="Phone Number" formControlName="phone">
+                  <mat-icon matSuffix>phone</mat-icon>
+                  <mat-hint>Enter Your Phone</mat-hint>
+                  <mat-error *ngIf="phone.invalid && phone.errors.required">
+                    Phone No. is <strong>required</strong>
+                  </mat-error>
+                  <mat-error *ngIf="phone.invalid && phone.errors.pattern">
+                    Enter Valid Phone No.
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-card-actions class="m-3">
+                  <button type="submit" mat-flat-button color="primary" [disabled]="!contactInfoForm.valid">
+                    Submit
+                  </button>
+                  <button type="reset" mat-flat-button color="warn" class="float-right">
+                    Reset
+                  </button>
+                </mat-card-actions>
+              </form>
+
+            </mat-card-content>
+          </mat-card>
+
         </mat-expansion-panel>
 
+        <!-- Address Information -->
+        <mat-expansion-panel class="m-3">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <i class="fa fa-address-card mr-2"></i>
+              Address
+            </mat-panel-title>
+            <mat-panel-description>
+              Edit Address
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <mat-card fxFlex="100%">
+            <mat-card-content>
+              <form [formGroup]="addressForm" (ngSubmit)="onAddressFormSubmit()" role="form" autocomplete="off" fxFlex="100%"
+                fxLayout="column" fxLayoutGap="20px">
+
+                <div class="row" formGroupName="currentAddress">
+                  <div class="col-3 m-auto">
+                    <mat-label>
+                      Current Address :
+                    </mat-label>
+                  </div>
+                  <div class="col-3">
+                    <mat-form-field>
+                      <input matInput type="text" name="street" placeholder="Street" formControlName="street">
+                    </mat-form-field>
+
+                  </div>
+                  <div class="col-3">
+                    <mat-form-field>
+                      <input matInput type="text" name="city" placeholder="City" formControlName="city">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-3">
+                    <mat-form-field>
+                      <input matInput maxlength="4" #zipCode placeholder="Zip Code" type="text" name="zipCode"
+                        formControlName="zipCode">
+                    </mat-form-field>
+                    <mat-hint>{{zipCode.value.length}} / 4</mat-hint>
+                  </div>
+                </div>
+
+                <div class="row" formGroupName="permanentAddress">
+                  <div class="col-3 m-auto">
+                    <mat-label>
+                      Permanent Address :
+                    </mat-label>
+                  </div>
+                  <div class="col-3">
+                    <mat-form-field>
+                      <input matInput type="text" name="street" placeholder="Street" formControlName="street">
+                    </mat-form-field>
+
+                  </div>
+                  <div class="col-3">
+                    <mat-form-field>
+                      <input matInput type="text" name="city" placeholder="City" formControlName="city">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-3">
+                    <mat-form-field>
+                      <input matInput maxlength="4" #zipCode placeholder="Zip Code" type="text" name="zipCode"
+                        formControlName="zipCode">
+                    </mat-form-field>
+                    <mat-hint>{{zipCode.value.length}} / 4</mat-hint>
+                  </div>
+                </div>
+
+                <mat-card-actions class="m-3">
+                  <button type="submit" mat-flat-button color="primary" [disabled]="!addressForm.valid">
+                    Submit
+                  </button>
+                  <button type="reset" mat-flat-button color="warn" class="float-right">
+                    Reset
+                  </button>
+                </mat-card-actions>
+              </form>
+            </mat-card-content>
+          </mat-card>
+
+        </mat-expansion-panel>
       </mat-accordion>
     </mat-tab>
 

@@ -1,20 +1,194 @@
-<div class="row my-4">
-  <div class="col-sm-12 col-md-12 col-xl-10 m-auto">
+<div class="row mx-n4 my-4">
+  <div class="col-sm-12 col-md-12 col-xl-11 m-auto">
     <div class="card card-info">
-      <div class="card-header">
-        <span>Personal Information</span>
-        <a style="cursor: pointer; float: right;" href="/user/dashboard" title="Edit">
+      <div style="background-color: #546E7A; color: white" class="card-header">
+        <span><i class="fa fa-eye"></i> View Resume</span>
+        <a style="cursor: pointer; float: right;" routerLink="/user/dashboard/edit" title="Edit">
           <i class="fa fa-edit fa-lg"></i></a>
         <a style="float: right; padding-right: 10px;" href="/" title="PDF Download"><i class="fa fa-file-pdf fa-lg text-danger"
             aria-hidden="true"></i></a>
       </div>
-      <div class="card-body row" *ngFor="let item of user | keyvalue">
-        <div class="col-xs-4 col-sm-3 col-md-4 col-lg-4 test-strong  text-right">{{ item.key | titlecase}}</div>
-        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">:</div>
-        <div class="col-xs-7 col-sm-8 col-md-7 col-lg-7"><span id="fullname"> {{ item.value }}</span></div>
-        <div class="clearfix"></div>
+      <div class="card-body">
+        <div class="row border rounded">
+          <div class="col-md-10 col-sm-9">
+            <div class="row job-seeker-name">Md. Asadul Islam</div>
+            <div class="row">
+              <div class="col-4">Address</div>
+              <div class="col-1">:</div>
+              <div class="col">Bahuka, Sirajganj Sadar, Sirajganj</div>
+            </div>
+            <div class="row">
+              <div class="col-4">Mobile No.</div>
+              <div class="col-1">:</div>
+              <div class="col">+8801767530221</div>
+            </div>
+            <div class="row">
+              <div class="col-4">Email</div>
+              <div class="col-1">:</div>
+              <div class="col">asad.cse.ru.15@gmail.com</div>
+            </div>
+          </div>
+          <div class="col-md-2 col-sm-3">
+            <img class="p-1" width="100%" src="https://mybdjobs.bdjobs.com/mybdjobs/images/male.png" alt="Md. Asadul Islam" />
+          </div>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="row d-block info-header rounded mt-2 p-2">
+          Personal Information
+        </div>
+        <div class="row border rounded">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-5 text-right">Father's Name</div>
+              <div class="col-1">:</div>
+              <div class="col">{{ user.fatherName }}</div>
+            </div>
+            <div class="row">
+              <div class="col-5 text-right">Mother's Name</div>
+              <div class="col-1">:</div>
+              <div class="col">{{ user.motherName }}</div>
+            </div>
+            <div class="row">
+              <div class="col-5 text-right">Birth Date</div>
+              <div class="col-1">:</div>
+              <div class="col">{{ user.birthDate }}</div>
+            </div>
+            <div class="row">
+              <div class="col-5 text-right">Gender</div>
+              <div class="col-1">:</div>
+              <div class="col">{{ user.gender }}</div>
+            </div>
+            <div class="row">
+              <div class="col-5 text-right">Marital Status</div>
+              <div class="col-1">:</div>
+              <div class="col">{{ user.maritalStatus }}</div>
+            </div>
+            <div class="row">
+              <div class="col-5 text-right">Nationality</div>
+              <div class="col-1">:</div>
+              <div class="col">{{ user.nationality }}</div>
+            </div>
+            <div class="row">
+              <div class="col-5 text-right">National ID No.</div>
+              <div class="col-1">:</div>
+              <div class="col">{{ user.nid }}</div>
+            </div>
+            <div class="row">
+              <div class="col-5 text-right">Religion</div>
+              <div class="col-1">:</div>
+              <div class="col">{{ user.religion }}</div>
+            </div>
+            <div class="row">
+              <div class="col-5 text-right">Current Address</div>
+              <div class="col-1">:</div>
+              <div class="col">{{ user.currentAddress }}</div>
+            </div>
+            <div class="row">
+              <div class="col-5 text-right">Permanent Address</div>
+              <div class="col-1">:</div>
+              <div class="col">{{ user.permanentAddress }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Academic Information -->
+        <div class="row d-block info-header rounded mt-2 p-2">
+          Academic Qualification
+        </div>
+
+        <div class="row border rounded">
+          <table class="table table-bordered" *ngIf="user.academicInfo">
+            <thead>
+              <th>Exam Title</th>
+              <th>Concentration/Major</th>
+              <th>Institute</th>
+              <th>Result</th>
+              <th>Pas.Year</th>
+              <th>Duration</th>
+              <th>Board/University</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let eduInfo of academicInfo">
+                <td>{{ eduInfo.examTitle }}</td>
+                <td>{{ eduInfo.major }}</td>
+                <td>{{ eduInfo.institute }}</td>
+                <td>{{ eduInfo.result }}</td>
+                <td>{{ eduInfo.passingYear }}</td>
+                <td>{{ eduInfo.duration }}</td>
+                <td>{{ eduInfo.board }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Work Experience -->
+        <div class="row d-block info-header rounded mt-2 p-2">
+          Work Experience
+        </div>
+        <div class="row border rounded">
+          <table class="table table-bordered" *ngIf="user.workExperience">
+            <thead>
+              <th>Organization Name</th>
+              <th>Position</th>
+              <th>Join Date</th>
+              <th>Resign Date</th>
+              <th>Salary</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let workInfo of user.workExperience">
+                <td>{{ workInfo.orgName }}</td>
+                <td>{{ workInfo.position }}</td>
+                <td>{{ workInfo.joinDate }}</td>
+                <td>{{ workInfo.resignDate }}</td>
+                <td>{{ workInfo.salary | currency:"BDT " }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Skills -->
+        <div class="row d-block info-header rounded mt-2 p-2">
+          Skills
+        </div>
+        <div class="row border rounded">
+          <div class="p-3 text-center">
+            <div *ngFor="let skill of user.skills">{{ skill }}, </div>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="row d-block info-header rounded mt-2 p-2">
+          Contact Information
+        </div>
+        <div class="row">
+          <table class="table table-bordered">
+            <thead>
+              <th>Contact Name</th>
+              <th>Contact</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  Email
+                </td>
+                <td> asad.cse.ru.15@gmail.com </td>
+              </tr>
+              <tr>
+                <td>
+                  Phone
+                </td>
+                <td> 01726622553</td>
+              </tr>
+              <tr *ngFor="let contactInfo of user.contactInfo">
+                <td>{{ contactInfo.contactName }}</td>
+                <td>{{ contactInfo.contact }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
   </div>
-
 </div>

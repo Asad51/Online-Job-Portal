@@ -50,7 +50,7 @@
     .collapse,
     .collapsing {
       .collapse-inner {
-        padding: .5rem 0;
+        padding: 0.5rem 0;
         min-width: 10rem;
         font-size: $dropdown-font-size;
         margin: 0 0 1rem 0;
@@ -58,7 +58,7 @@
         .collapse-header {
           margin: 0;
           white-space: nowrap;
-          padding: .5rem 1.5rem;
+          padding: 0.5rem 1.5rem;
           text-transform: uppercase;
           font-weight: 800;
           font-size: 0.65rem;
@@ -100,8 +100,8 @@
 
     &::after {
       font-weight: 900;
-      content: '\f104';
-      font-family: 'Font Awesome 5 Free';
+      content: "\f104";
+      font-family: "Font Awesome 5 Free";
       margin-right: 0.1rem;
     }
 
@@ -119,42 +119,14 @@
     overflow: hidden;
 
     #sidebarToggle::after {
-      content: '\f105';
-      font-family: 'Font Awesome 5 Free';
+      content: "\f105";
+      font-family: "Font Awesome 5 Free";
       margin-left: 0.25rem;
-    }
-  }
-
-  .sidebar-brand {
-    height: $topbar-base-height;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 800;
-    padding: 1.5rem 1rem;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 0.05rem;
-    z-index: 1;
-
-    .sidebar-brand-icon i {
-      font-size: 2rem;
-    }
-
-    .sidebar-brand-text {
-      display: none;
     }
   }
 
   hr.sidebar-divider {
     margin: 0 1rem 1rem;
-  }
-
-  .sidebar-heading {
-    text-align: center;
-    padding: 0 1rem;
-    font-weight: 800;
-    font-size: 0.65rem;
-    @extend .text-uppercase;
   }
 }
 
@@ -163,7 +135,6 @@
     width: $sidebar-base-width !important;
 
     .nav-item {
-
       // Accordion
       .collapse {
         position: relative;
@@ -214,29 +185,15 @@
             vertical-align: 0;
             border: 0;
             font-weight: 900;
-            content: '\f107';
-            font-family: 'Font Awesome 5 Free';
+            content: "\f107";
+            font-family: "Font Awesome 5 Free";
           }
 
           &.collapsed::after {
-            content: '\f105';
+            content: "\f105";
           }
         }
       }
-    }
-
-    .sidebar-brand {
-      .sidebar-brand-icon i {
-        font-size: 2rem;
-      }
-
-      .sidebar-brand-text {
-        display: inline;
-      }
-    }
-
-    .sidebar-heading {
-      text-align: left;
     }
 
     &.toggled {
@@ -244,7 +201,6 @@
       width: $sidebar-collapsed-width !important;
 
       .nav-item {
-
         // Accordion
         .collapse {
           position: absolute;
@@ -254,7 +210,8 @@
           // Grow In Animation for Toggled State
           animation-name: growIn;
           animation-duration: 200ms;
-          animation-timing-function: transform cubic-bezier(.18, 1.25, .4, 1), opacity cubic-bezier(0, 1, .4, 1);
+          animation-timing-function: transform cubic-bezier(0.18, 1.25, 0.4, 1),
+            opacity cubic-bezier(0, 1, 0.4, 1);
 
           .collapse-inner {
             box-shadow: $box-shadow;
@@ -295,38 +252,15 @@
           }
         }
       }
-
-      .sidebar-brand {
-        .sidebar-brand-icon i {
-          font-size: 2rem;
-        }
-
-        .sidebar-brand-text {
-          display: none;
-        }
-      }
-
-      .sidebar-heading {
-        text-align: center;
-      }
     }
   }
 }
 
 // Sidebar Color Variants
-
 // Sidebar Light
 .sidebar-light {
-  .sidebar-brand {
-    color: $gray-700;
-  }
-
   hr.sidebar-divider {
     border-top: 1px solid $gray-200;
-  }
-
-  .sidebar-heading {
-    color: $gray-500;
   }
 
   .nav-item {
@@ -380,16 +314,8 @@
 
 // Sidebar Dark
 .sidebar-dark {
-  .sidebar-brand {
-    color: $white;
-  }
-
   hr.sidebar-divider {
     border-top: 1px solid fade-out($white, 0.85);
-  }
-
-  .sidebar-heading {
-    color: fade-out($white, 0.6);
   }
 
   .nav-item {

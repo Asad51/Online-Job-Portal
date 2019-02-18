@@ -13,11 +13,6 @@
   padding: 12px 12px;
 }
 
-.nav-item:hover {
-  cursor: pointer;
-  background-color: #f5f5f5
-}
-
 .navbar-nav>li.active>a {
   color: #2f64a3;
   background-color: #f5f5f5;
@@ -28,6 +23,11 @@
   max-height: 300px !important;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.nav-item:hover,
+.dropdown-item:hover {
+  background-color: #f5f5f5;
 }
 
 .login-menu {

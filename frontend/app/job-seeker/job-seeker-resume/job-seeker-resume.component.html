@@ -1,0 +1,20 @@
+<div class="row my-4">
+  <div class="col-sm-12 col-md-12 col-xl-10 m-auto">
+    <div class="card card-info">
+      <div class="card-header">
+        <span>Personal Information</span>
+        <a style="cursor: pointer; float: right;" href="/user/dashboard" title="Edit">
+          <i class="fa fa-edit fa-lg"></i></a>
+        <a style="float: right; padding-right: 10px;" href="/" title="PDF Download"><i class="fa fa-file-pdf fa-lg text-danger"
+            aria-hidden="true"></i></a>
+      </div>
+      <div class="card-body row" *ngFor="let item of user | keyvalue">
+        <div class="col-xs-4 col-sm-3 col-md-4 col-lg-4 test-strong  text-right">{{ item.key | titlecase}}</div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">:</div>
+        <div class="col-xs-7 col-sm-8 col-md-7 col-lg-7"><span id="fullname"> {{ item.value }}</span></div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+</div>

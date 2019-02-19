@@ -1,9 +1,16 @@
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  Validators,
+  FormControl
+} from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 
 import { UserService } from "../../core/http";
 
+declare let $: any;
 @Component({
   selector: "app-edit-profile",
   templateUrl: "./edit-profile.component.html",
@@ -14,6 +21,7 @@ export class EditProfileComponent implements OnInit {
   personalInfoForm: FormGroup;
   contactInfoForm: FormGroup;
   addressForm: FormGroup;
+  othersInfoForm: FormGroup;
   user: Object = null;
 
   constructor(
@@ -59,6 +67,29 @@ export class EditProfileComponent implements OnInit {
         zipCode: ["", [Validators.required, Validators.pattern(/^\w{4}$/)]]
       })
     });
+
+    this.othersInfoForm = this.fb.group({
+      academicInfo: this.fb.array([
+        this.fb.group({
+          examTitle: ["", [Validators.required]],
+          major: ["", [Validators.required]],
+          institute: ["", [Validators.required]],
+          result: ["", [Validators.required]],
+          passingYear: ["", [Validators.required]],
+          duration: ["", [Validators.required]],
+          board: ["", [Validators.required]]
+        })
+      ]),
+      workExperience: this.fb.array([
+        this.fb.group({
+          orgName: ["", [Validators.required]],
+          position: ["", [Validators.required]],
+          joinDate: ["", [Validators.required]],
+          resignDate: ["", [Validators.required]],
+          salary: ["", [Validators.required]]
+        })
+      ])
+    });
   }
 
   ngOnInit() {
@@ -91,13 +122,13 @@ export class EditProfileComponent implements OnInit {
           .setValue(data["currentAddress"].zipCode || "");
         this.permanentAddress
           .get("street")
-          .setValue(data["currentAddress"].street || "");
+          .setValue(data["permanentAddress"].street || "");
         this.permanentAddress
           .get("city")
-          .setValue(data["currentAddress"].city || "");
+          .setValue(data["permanentAddress"].city || "");
         this.permanentAddress
           .get("zipCode")
-          .setValue(data["currentAddress"].zipCode || "");
+          .setValue(data["permanentAddress"].zipCode || "");
       },
       err => {
         this.toastr.error(
@@ -172,6 +203,60 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
+  onAddSkill(skill) {
+    if (this.user["skills"].length >= 20) {
+      this.toastr.warning("You can't add more skills.");
+      return;
+    }
+    this.user["skills"].push(skill.toLowerCase());
+    this.updateSkills(
+      this.user["skills"].filter((value, index, self) => {
+        return self.indexOf(value) === index;
+      })
+    );
+  }
+
+  onRemoveSkill(skill) {
+    let i = this.user["skills"].indexOf(skill);
+    this.user["skills"].splice(i, 1);
+    this.updateSkills(this.user["skills"]);
+  }
+
+  updateSkills(skills) {
+    this.userService.updateOthers({ skills: skills }).subscribe(
+      data => {
+        this.toastr.success("Skills updated successfully.");
+        this.getUserData();
+      },
+      err => {
+        this.toastr.error(
+          err.error["notLoggedIn"] ||
+            err.error["error"] ||
+            "Something went wrong"
+        );
+      }
+    );
+  }
+
+  onOthersInfoFormSubmit() {
+    if (!this.othersInfoForm.valid) {
+      return;
+    }
+    this.userService.updateOthers(this.othersInfoForm.value).subscribe(
+      data => {
+        this.toastr.success(data["success"]);
+        this.getUserData();
+      },
+      err => {
+        this.toastr.error(
+          err.error["notLoggedIn"] ||
+            err.error["error"] ||
+            "Something went wrong"
+        );
+      }
+    );
+  }
+
   get name() {
     return this.personalInfoForm.get("name");
   }
@@ -222,5 +307,13 @@ export class EditProfileComponent implements OnInit {
 
   get permanentAddress() {
     return this.addressForm.get("permanentAddress");
+  }
+
+  get academicInfo() {
+    return this.othersInfoForm.get("academicInfo");
+  }
+
+  get workExperience() {
+    return this.othersInfoForm.get("workExperience");
   }
 }

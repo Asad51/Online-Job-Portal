@@ -300,19 +300,15 @@ module.exports = {
   updateOthers: async (req, res, next) => {
     let user = await User.findOne({
       _id: res.locals.id
-    }, 'academicInfo experience skills');
-
-    for (let key of Object.keys(user)) {
-      if (!req.body[key] || req.body[key].length <= 0) {
-        user[key] = user[key] || req.body[key];
-      } else {
-        user[key] = req.body[key];
-      }
-    }
+    }, 'academicInfo workExperience skills');
 
     updateJobSeeker({
       _id: res.locals.id
-    }, user, {
+    }, {
+      skills: req.body.skills || user.skills,
+      academicInfo: req.body.academicInfo || user.academicInfo,
+      workExperience: req.body.workExperience || user.workExperience
+    }, {
       new: true
     }, res);
   },

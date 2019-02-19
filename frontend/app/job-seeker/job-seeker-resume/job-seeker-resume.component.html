@@ -8,7 +8,7 @@
         <a style="float: right; padding-right: 10px;" href="/" title="PDF Download"><i class="fa fa-file-pdf fa-lg text-danger"
             aria-hidden="true"></i></a>
       </div>
-      <div class="card-body">
+      <div class="card-body" *ngIf="user">
         <div class="row border rounded">
           <div class="col-md-10 col-sm-9">
             <div class="row job-seeker-name">{{ user.name }}</div>
@@ -155,9 +155,9 @@
         <div class="row d-block info-header rounded mt-2 p-2">
           Skills
         </div>
-        <div class="row border rounded">
+        <div *ngIf="user.skills" class="row border rounded">
           <div class="p-3 text-center">
-            <div *ngFor="let skill of user.skills">{{ skill }}, </div>
+            <span *ngFor="let skill of user.skills; let i=index"><span *ngIf="i">,</span> {{ skill }}</span>
           </div>
         </div>
 

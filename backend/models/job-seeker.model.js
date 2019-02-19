@@ -35,7 +35,7 @@ let userSchema = mongoose.Schema({
     duration: Number,
     board: String
   }],
-  experience: [{
+  workExperience: [{
     orgName: String,
     position: String,
     joinDate: Date,

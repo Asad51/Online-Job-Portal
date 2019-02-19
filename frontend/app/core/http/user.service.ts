@@ -69,4 +69,12 @@ export class UserService {
       this.options
     );
   }
+
+  updateOthers(info) {
+    return this.httpClient.put(
+      environment.apiUrl + "user/others",
+      info,
+      this.options
+    );
+  }
 }

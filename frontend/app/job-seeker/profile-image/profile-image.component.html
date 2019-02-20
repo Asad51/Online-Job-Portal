@@ -1,0 +1,23 @@
+<div class="card m-auto p-5">
+  <div class="mx-auto my-3">
+    <button mat-stroked-button type="button" (click)="filePicker.click()">
+      Upload Image
+    </button>
+    <input
+      [formControl]="profileImage"
+      type="file"
+      #filePicker
+      (change)="onChangeImage($event)"
+    />
+  </div>
+  <button
+    [disabled]="!profileImage.valid"
+    (click)="onImageUpload()"
+    class="mx-auto my-3"
+    mat-raised-button
+    color="primary"
+    type="submit"
+  >
+    Upload Image
+  </button>
+</div>

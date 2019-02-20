@@ -1,7 +1,8 @@
 const http = require('http');
-const fs = require('fs');
 const debug = require('debug');
 const mongoose = require('mongoose');
+const path = require('path');
+const express = require('express');
 
 mongoose.Promise = require('bluebird');
 
@@ -10,6 +11,8 @@ let config = require('./config/env.config');
 
 let port = process.env.PORT || config.port;
 let dbUrl = config.dbUrl;
+
+app.use('/public/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 /***** Request Handling *****/
 let errorsRoute = require('./routes/error.route');

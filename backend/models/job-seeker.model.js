@@ -15,7 +15,7 @@ let userSchema = mongoose.Schema({
   maritalStatus: String,
   nationality: String,
   nid: String,
-  imageUrl: String,
+  imagePath: String,
   currentAddress: {
     street: String,
     city: String,

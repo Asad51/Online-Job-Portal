@@ -6,8 +6,8 @@ const session = require('express-session');
 const passport = require("passport");
 const morgan = require('morgan');
 const MongoStore = require('connect-mongo')(session);
-
-const app = require('express')();
+const express = require("express");
+const app = express();
 
 const secretKeys = require('./secret.key');
 const config = require('./env.config');

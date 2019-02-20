@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 const User = require("../models/job-seeker.model");
 const crypto = require("../libs/data-encryption");
@@ -160,6 +161,7 @@ module.exports = {
         });
       }
       user.email = crypto.decrypt(user.email, secretKeys.userEmailKey);
+      user.imagePath = user.imagePath ? req.protocol + "://" + "localhost:3000" + '/' + user.imagePath : "";
       res.status(200).send(user);
     });
   },
@@ -308,6 +310,29 @@ module.exports = {
       skills: req.body.skills || user.skills,
       academicInfo: req.body.academicInfo || user.academicInfo,
       workExperience: req.body.workExperience || user.workExperience
+    }, {
+      new: true
+    }, res);
+  },
+  updateProfileImage: async (req, res, next) => {
+    if (!req.file) {
+      return res.status(400).send({
+        error: "No file is selected."
+      });
+    }
+
+    let user = await User.findOne({
+      _id: res.locals.id
+    }, 'imagePath');
+    if (user.imagePath) {
+      fs.unlinkSync(user.imagePath);
+    }
+
+    let imagePath = 'public/uploads/' + req.file.filename || user.imagePath;
+    updateJobSeeker({
+      _id: res.locals.id
+    }, {
+      imagePath: imagePath
     }, {
       new: true
     }, res);

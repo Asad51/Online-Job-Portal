@@ -77,4 +77,15 @@ export class UserService {
       this.options
     );
   }
+
+  uploadProfileImage(file: any) {
+    return this.httpClient.put(environment.apiUrl + "user/photo", file, {
+      observe: "body",
+      withCredentials: true,
+      headers: new HttpHeaders().append(
+        "__jsx__",
+        localStorage.getItem("__jsx__")
+      )
+    });
+  }
 }

@@ -21,6 +21,7 @@ export class EditProfileComponent implements OnInit {
   personalInfoForm: FormGroup;
   contactInfoForm: FormGroup;
   addressForm: FormGroup;
+  academicForm: FormGroup;
   othersInfoForm: FormGroup;
   user: Object = null;
 
@@ -69,17 +70,7 @@ export class EditProfileComponent implements OnInit {
     });
 
     this.othersInfoForm = this.fb.group({
-      academicInfo: this.fb.array([
-        this.fb.group({
-          examTitle: ["", [Validators.required]],
-          major: ["", [Validators.required]],
-          institute: ["", [Validators.required]],
-          result: ["", [Validators.required]],
-          passingYear: ["", [Validators.required]],
-          duration: ["", [Validators.required]],
-          board: ["", [Validators.required]]
-        })
-      ]),
+      academicInfo: this.fb.array([]),
       workExperience: this.fb.array([
         this.fb.group({
           orgName: ["", [Validators.required]],
@@ -236,6 +227,20 @@ export class EditProfileComponent implements OnInit {
         );
       }
     );
+  }
+
+  onAddAcademicInfo() {
+    let control = this.fb.group({
+      examTitle: ["", [Validators.required]],
+      major: ["", [Validators.required]],
+      institute: ["", [Validators.required]],
+      result: ["", [Validators.required]],
+      passingYear: ["", [Validators.required]],
+      duration: ["", [Validators.required]],
+      board: ["", [Validators.required]]
+    });
+
+    (<FormArray>this.othersInfoForm.get("academicInfo")).push(control);
   }
 
   onOthersInfoFormSubmit() {

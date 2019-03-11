@@ -5,22 +5,34 @@
       <mat-accordion>
         <!-- Personal data -->
         <mat-expansion-panel [expanded]="panelOpenState" class="m-3">
-          <mat-expansion-panel-header>
+          <mat-expansion-panel-header class="info-panel-bg">
             <mat-panel-title>
               <i class="material-icons mr-2">account_circle</i>
               Personal Information
             </mat-panel-title>
-            <mat-panel-description>
-              Edit Personal Information
-            </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <mat-card fxFlex="100%">
+          <mat-card class="mt-3" fxFlex="100%">
             <mat-card-content>
-              <form [formGroup]="personalInfoForm" (ngSubmit)="onPersonalInfoFormSubmit()" role="form" autocomplete="off"
-                fxFlex="100%" fxLayout="column" fxLayoutGap="20px">
+              <form
+                [formGroup]="personalInfoForm"
+                (ngSubmit)="onPersonalInfoFormSubmit()"
+                role="form"
+                autocomplete="off"
+                fxFlex="100%"
+                fxLayout="column"
+                fxLayoutGap="20px"
+              >
                 <mat-form-field class="form-field">
-                  <input matInput type="text" name="name" id="name" placeholder="Name" formControlName="name" required />
+                  <input
+                    matInput
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Name"
+                    formControlName="name"
+                    required
+                  />
                   <mat-hint>Enter Your Name</mat-hint>
                   <mat-error *ngIf="name.invalid && name.errors.required">
                     Name is <strong>required</strong>
@@ -28,41 +40,83 @@
                 </mat-form-field>
 
                 <mat-form-field class="form-field">
-                  <input matInput type="text" name="fatherName" id="fatherName" placeholder="Father's Name"
-                    formControlName="fatherName" />
+                  <input
+                    matInput
+                    type="text"
+                    name="fatherName"
+                    id="fatherName"
+                    placeholder="Father's Name"
+                    formControlName="fatherName"
+                  />
                   <mat-hint>Enter Your Fathers' Name</mat-hint>
-                  <mat-error *ngIf="fatherName.invalid && fatherName.errors.required">
+                  <mat-error
+                    *ngIf="fatherName.invalid && fatherName.errors.required"
+                  >
                     Fathers' Name is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="form-field">
-                  <input matInput type="text" name="motherName" id="motherName" placeholder="Mother's Name"
-                    formControlName="motherName" />
+                  <input
+                    matInput
+                    type="text"
+                    name="motherName"
+                    id="motherName"
+                    placeholder="Mother's Name"
+                    formControlName="motherName"
+                  />
                   <mat-hint>Enter Your Mother's Name</mat-hint>
-                  <mat-error *ngIf="motherName.invalid && motherName.errors.required">
+                  <mat-error
+                    *ngIf="motherName.invalid && motherName.errors.required"
+                  >
                     Mother's Name is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
 
-                <mat-radio-group name="gender" id="gender" formControlName="gender">
+                <mat-radio-group
+                  name="gender"
+                  id="gender"
+                  formControlName="gender"
+                >
                   <label class="mr-3" for="gender">Gender : </label>
-                  <mat-radio-button class="mx-3" value="Male">Male</mat-radio-button>
-                  <mat-radio-button class="mx-3" value="Female">Female</mat-radio-button>
-                  <mat-radio-button class="mx-3" value="Others">Others</mat-radio-button>
+                  <mat-radio-button class="mx-3" value="Male"
+                    >Male</mat-radio-button
+                  >
+                  <mat-radio-button class="mx-3" value="Female"
+                    >Female</mat-radio-button
+                  >
+                  <mat-radio-button class="mx-3" value="Others"
+                    >Others</mat-radio-button
+                  >
                 </mat-radio-group>
 
                 <mat-form-field class="form-field">
-                  <input matInput type="text" name="birthDate" id="birthDate" placeholder="Birth Date" formControlName="birthDate"
-                    bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" required />
+                  <input
+                    matInput
+                    type="text"
+                    name="birthDate"
+                    id="birthDate"
+                    placeholder="Birth Date"
+                    formControlName="birthDate"
+                    bsDatepicker
+                    [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
+                    required
+                  />
                   <mat-hint>Format : YYYY-MM-DD</mat-hint>
-                  <mat-error *ngIf="birthDate.invalid && birthDate.errors.required">
+                  <mat-error
+                    *ngIf="birthDate.invalid && birthDate.errors.required"
+                  >
                     Birth Date is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
 
                 <mat-form-field>
-                  <mat-select placeholder="Religion" name="religion" id="religion" formControlName="religion">
+                  <mat-select
+                    placeholder="Religion"
+                    name="religion"
+                    id="religion"
+                    formControlName="religion"
+                  >
                     <mat-option value="">
                       None
                     </mat-option>
@@ -84,24 +138,49 @@
                   </mat-select>
                 </mat-form-field>
 
-                <mat-radio-group name="maritalStatus" id="maritalStatus" formControlName="maritalStatus">
-                  <label class="mr-3" for="maritalStatus">Marital Status :
+                <mat-radio-group
+                  name="maritalStatus"
+                  id="maritalStatus"
+                  formControlName="maritalStatus"
+                >
+                  <label class="mr-3" for="maritalStatus"
+                    >Marital Status :
                   </label>
-                  <mat-radio-button class="mx-3" value="Married">Married</mat-radio-button>
-                  <mat-radio-button class="mx-3" value="Unmarried">Unmarried</mat-radio-button>
+                  <mat-radio-button class="mx-3" value="Married"
+                    >Married</mat-radio-button
+                  >
+                  <mat-radio-button class="mx-3" value="Unmarried"
+                    >Unmarried</mat-radio-button
+                  >
                 </mat-radio-group>
 
                 <mat-form-field class="form-field">
-                  <input matInput type="text" name="nationality" id="nationality" placeholder="Nationality"
-                    formControlName="nationality" required />
+                  <input
+                    matInput
+                    type="text"
+                    name="nationality"
+                    id="nationality"
+                    placeholder="Nationality"
+                    formControlName="nationality"
+                    required
+                  />
                   <mat-hint>Your Nationality</mat-hint>
-                  <mat-error *ngIf="nationality.invalid && nationality.errors.required">
+                  <mat-error
+                    *ngIf="nationality.invalid && nationality.errors.required"
+                  >
                     Nationality is <strong>required</strong>
                   </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="form-field">
-                  <input matInput type="text" name="nid" id="nid" placeholder="National ID No." formControlName="nid" />
+                  <input
+                    matInput
+                    type="text"
+                    name="nid"
+                    id="nid"
+                    placeholder="National ID No."
+                    formControlName="nid"
+                  />
                   <mat-hint>National ID No.</mat-hint>
                   <mat-error *ngIf="nid.invalid && nid.errors.pattern">
                     NID contains 13 or 17 digits only.
@@ -109,10 +188,20 @@
                 </mat-form-field>
 
                 <mat-card-actions class="m-3">
-                  <button type="submit" mat-flat-button color="primary" [disabled]="!personalInfoForm.valid">
+                  <button
+                    type="submit"
+                    mat-flat-button
+                    color="primary"
+                    [disabled]="!personalInfoForm.valid"
+                  >
                     Submit
                   </button>
-                  <button type="reset" mat-flat-button color="warn" class="float-right">
+                  <button
+                    type="reset"
+                    mat-flat-button
+                    color="warn"
+                    class="float-right"
+                  >
                     Reset
                   </button>
                 </mat-card-actions>
@@ -123,39 +212,59 @@
 
         <!-- Contact Information -->
         <mat-expansion-panel class="m-3">
-          <mat-expansion-panel-header>
+          <mat-expansion-panel-header class="info-panel-bg">
             <mat-panel-title>
               <i class="material-icons mr-2">contact_mail</i>
               Contact Information
             </mat-panel-title>
-            <mat-panel-description>
-              Edit Contact Information
-            </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <mat-card fxFlex="100%">
+          <mat-card class="mt-3" fxFlex="100%">
             <mat-card-content>
-              <form [formGroup]="contactInfoForm" (ngSubmit)="onContactInfoFormSubmit()" role="form" autocomplete="off"
-                fxFlex="100%" fxLayout="column" fxLayoutGap="20px">
+              <form
+                [formGroup]="contactInfoForm"
+                (ngSubmit)="onContactInfoFormSubmit()"
+                role="form"
+                autocomplete="off"
+                fxFlex="100%"
+                fxLayout="column"
+                fxLayoutGap="20px"
+              >
                 <mat-form-field class="form-field">
                   <span matPrefix> &nbsp;</span>
-                  <input matInput type="email" name="email" id="email" placeholder="Email" formControlName="email" />
+                  <input
+                    matInput
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Email"
+                    formControlName="email"
+                  />
                   <mat-icon matSuffix>email</mat-icon>
                   <mat-hint>Enter Your Email</mat-hint>
                   <mat-error *ngIf="email.invalid && email.errors.required">
                     Email is <strong>required</strong>
                   </mat-error>
-                  <mat-error *ngIf="
+                  <mat-error
+                    *ngIf="
                       email.invalid &&
                       (email.errors.email || email.errors.pattern)
-                    ">
+                    "
+                  >
                     Enter Valid Email.
                   </mat-error>
                 </mat-form-field>
 
                 <mat-form-field class="form-field">
                   <span matPrefix>+880 &nbsp;</span>
-                  <input type="tel" name="phone" id="phone" matInput placeholder="Phone Number" formControlName="phone" />
+                  <input
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    matInput
+                    placeholder="Phone Number"
+                    formControlName="phone"
+                  />
                   <mat-icon matSuffix>phone</mat-icon>
                   <mat-hint>Enter Your Phone</mat-hint>
                   <mat-error *ngIf="phone.invalid && phone.errors.required">
@@ -167,10 +276,20 @@
                 </mat-form-field>
 
                 <mat-card-actions class="m-3">
-                  <button type="submit" mat-flat-button color="primary" [disabled]="!contactInfoForm.valid">
+                  <button
+                    type="submit"
+                    mat-flat-button
+                    color="primary"
+                    [disabled]="!contactInfoForm.valid"
+                  >
                     Submit
                   </button>
-                  <button type="reset" mat-flat-button color="warn" class="float-right">
+                  <button
+                    type="reset"
+                    mat-flat-button
+                    color="warn"
+                    class="float-right"
+                  >
                     Reset
                   </button>
                 </mat-card-actions>
@@ -181,20 +300,24 @@
 
         <!-- Address Information -->
         <mat-expansion-panel class="m-3">
-          <mat-expansion-panel-header>
+          <mat-expansion-panel-header class="info-panel-bg">
             <mat-panel-title>
               <i class="fa fa-address-card mr-2"></i>
               Address
             </mat-panel-title>
-            <mat-panel-description>
-              Edit Address
-            </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <mat-card fxFlex="100%">
+          <mat-card class="mt-3" fxFlex="100%">
             <mat-card-content>
-              <form [formGroup]="addressForm" (ngSubmit)="onAddressFormSubmit()" role="form" autocomplete="off" fxFlex="100%"
-                fxLayout="column" fxLayoutGap="20px">
+              <form
+                [formGroup]="addressForm"
+                (ngSubmit)="onAddressFormSubmit()"
+                role="form"
+                autocomplete="off"
+                fxFlex="100%"
+                fxLayout="column"
+                fxLayoutGap="20px"
+              >
                 <div class="row" formGroupName="currentAddress">
                   <div class="col-3 m-auto">
                     <mat-label>
@@ -203,18 +326,37 @@
                   </div>
                   <div class="col-3">
                     <mat-form-field>
-                      <input matInput type="text" name="street" placeholder="Street" formControlName="street" />
+                      <input
+                        matInput
+                        type="text"
+                        name="street"
+                        placeholder="Street"
+                        formControlName="street"
+                      />
                     </mat-form-field>
                   </div>
                   <div class="col-3">
                     <mat-form-field>
-                      <input matInput type="text" name="city" placeholder="City" formControlName="city" />
+                      <input
+                        matInput
+                        type="text"
+                        name="city"
+                        placeholder="City"
+                        formControlName="city"
+                      />
                     </mat-form-field>
                   </div>
                   <div class="col-3">
                     <mat-form-field>
-                      <input matInput maxlength="4" #zipCode placeholder="Zip Code" type="text" name="zipCode"
-                        formControlName="zipCode" />
+                      <input
+                        matInput
+                        maxlength="4"
+                        #zipCode
+                        placeholder="Zip Code"
+                        type="text"
+                        name="zipCode"
+                        formControlName="zipCode"
+                      />
                     </mat-form-field>
                     <mat-hint>{{ zipCode.value.length }} / 4</mat-hint>
                   </div>
@@ -228,28 +370,57 @@
                   </div>
                   <div class="col-3">
                     <mat-form-field>
-                      <input matInput type="text" name="street" placeholder="Street" formControlName="street" />
+                      <input
+                        matInput
+                        type="text"
+                        name="street"
+                        placeholder="Street"
+                        formControlName="street"
+                      />
                     </mat-form-field>
                   </div>
                   <div class="col-3">
                     <mat-form-field>
-                      <input matInput type="text" name="city" placeholder="City" formControlName="city" />
+                      <input
+                        matInput
+                        type="text"
+                        name="city"
+                        placeholder="City"
+                        formControlName="city"
+                      />
                     </mat-form-field>
                   </div>
                   <div class="col-3">
                     <mat-form-field>
-                      <input matInput maxlength="4" #zipCode placeholder="Zip Code" type="text" name="zipCode"
-                        formControlName="zipCode" />
+                      <input
+                        matInput
+                        maxlength="4"
+                        #zipCode
+                        placeholder="Zip Code"
+                        type="text"
+                        name="zipCode"
+                        formControlName="zipCode"
+                      />
                     </mat-form-field>
                     <mat-hint>{{ zipCode.value.length }} / 4</mat-hint>
                   </div>
                 </div>
 
                 <mat-card-actions class="m-3">
-                  <button type="submit" mat-flat-button color="primary" [disabled]="!addressForm.valid">
+                  <button
+                    type="submit"
+                    mat-flat-button
+                    color="primary"
+                    [disabled]="!addressForm.valid"
+                  >
                     Submit
                   </button>
-                  <button type="reset" mat-flat-button color="warn" class="float-right">
+                  <button
+                    type="reset"
+                    mat-flat-button
+                    color="warn"
+                    class="float-right"
+                  >
                     Reset
                   </button>
                 </mat-card-actions>
@@ -263,8 +434,76 @@
     <!-- Academic Information update -->
     <mat-tab label="Academic">
       <div class="container-fluid">
-        <form [formGroup]="othersInfoForm" (ngSubmit)="onOthersInfoFormSubmit()" role="form" autocomplete="off" fxFlex="100%"
-          fxLayout="column" fxLayoutGap="20px"></form>
+        <mat-accordion>
+          <mat-expansion-panel class="my-3">
+            <mat-expansion-panel-header class="info-panel-bg">
+              <mat-panel-title>
+                <i class="fa fa-university mr-2"></i>
+                Academic Information
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-card class="mt-3" fxFlex="100%">
+              <mat-card-content>
+                <button mat-button (click)="onAddAcademicInfo()">
+                  Add Academic Info
+                </button>
+                <form
+                  [formGroup]="othersInfoForm"
+                  (ngSubmit)="onOthersInfoFormSubmit()"
+                  role="form"
+                  autocomplete="off"
+                  fxFlex="100%"
+                  fxLayout="column"
+                  fxLayoutGap="20px"
+                >
+                  <div formArrayName="academicInfo">
+                    <div
+                      *ngFor="
+                        let info of academicInfo['controls'];
+                        let i = index
+                      "
+                    >
+                      <div [formGroupName]="i">
+                        <mat-form-field>
+                          <input
+                            matInput
+                            type="text"
+                            name="institute"
+                            placeholder="Institute"
+                            formControlName="institute"
+                            required
+                          />
+                          <mat-hint>Institute Name</mat-hint>
+                          <!-- <mat-error
+                            *ngIf="
+                              institute.invalid && institute.errors.required
+                            "
+                          >
+                            Institute Name is <strong>required</strong>
+                          </mat-error> -->
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+
+                  <mat-card-actions class="m-3">
+                    <button type="submit" mat-flat-button color="primary">
+                      Submit
+                    </button>
+                    <button
+                      type="reset"
+                      mat-flat-button
+                      color="warn"
+                      class="float-right"
+                    >
+                      Reset
+                    </button>
+                  </mat-card-actions>
+                </form>
+              </mat-card-content>
+            </mat-card>
+          </mat-expansion-panel>
+        </mat-accordion>
       </div>
     </mat-tab>
 
@@ -281,15 +520,26 @@
               <mat-form-field class="col-md-12">
                 <mat-label>Add Skill</mat-label>
                 <input matInput [(ngModel)]="skill" placeholder="add more.." />
-                <span matSuffix><button mat-raised-button (click)="onAddSkill(skill)">
+                <span matSuffix
+                  ><button mat-raised-button (click)="onAddSkill(skill)">
                     Add
-                  </button></span>
+                  </button></span
+                >
               </mat-form-field>
             </div>
             <div class="row" id="skill" *ngIf="user && user.skills">
-              <div class="alert alert-info mx-2" *ngFor="let skill of user.skills">
+              <div
+                class="alert alert-info mx-2"
+                *ngFor="let skill of user.skills"
+              >
                 <span> {{ skill }} </span>
-                <a (click)="onRemoveSkill(skill)" style="cursor: pointer" class="btn text-danger"> <i class="fa fa-times"></i></a>
+                <a
+                  (click)="onRemoveSkill(skill)"
+                  style="cursor: pointer"
+                  class="btn text-danger"
+                >
+                  <i class="fa fa-times"></i
+                ></a>
               </div>
             </div>
           </mat-card-content>

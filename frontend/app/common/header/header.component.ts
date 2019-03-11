@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { ToastrService } from "ngx-toastr";
 
-import { UserService } from "./../../core/http";
+import { UserService, EmployerService } from "./../../core/http";
 import { PasswordValidator } from "./password-validator";
 import { UserAuthService } from "../../core/services";
 
@@ -34,6 +34,7 @@ export class HeaderComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private userService: UserService,
+    private employerService: EmployerService,
     private userAuthService: UserAuthService
   ) {}
 
@@ -64,6 +65,15 @@ export class HeaderComponent implements OnInit {
       return;
     }
     if (this.isEmployerIsSelected) {
+      this.employerService.register(this.registerForm.value).subscribe(
+        data => {
+          this.toastr.success(data["success"]);
+          this.closeRegisterModal();
+        },
+        err => {
+          this.toastr.error(err.error["error"] || "Something went wrong.");
+        }
+      );
     } else {
       this.userService.register(this.registerForm.value).subscribe(
         data => {
@@ -83,7 +93,16 @@ export class HeaderComponent implements OnInit {
     }
 
     if (this.isEmployerIsSelected) {
-      console.log(this.loginForm.value);
+      this.employerService.login(this.loginForm.value).subscribe(
+        data => {
+          this.closeLoginModal();
+          localStorage.setItem("__ex__", data["token"]);
+          this.toastr.success(data["success"]);
+        },
+        err => {
+          this.toastr.error(err.error["error"] || "Something went wrong.");
+        }
+      );
     } else {
       this.userService.login(this.loginForm.value).subscribe(
         data => {
@@ -103,11 +122,30 @@ export class HeaderComponent implements OnInit {
       data => {
         this.toastr.info(data["success"]);
         localStorage.removeItem("__jsx__");
+        this.router.navigate(["/"]);
       },
       err => {
         if (err.error["notLoggedIn"]) {
           this.toastr.error(err.error["notLoggedIn"]);
           localStorage.removeItem("__jsx__");
+        } else {
+          this.toastr.error(err.error["error"] || "Something went wrong.");
+        }
+      }
+    );
+  }
+
+  onEmployerLogout() {
+    this.employerService.logout().subscribe(
+      data => {
+        this.toastr.info(data["success"]);
+        localStorage.removeItem("__ex__");
+        this.router.navigate(["/"]);
+      },
+      err => {
+        if (err.error["notLoggedIn"]) {
+          this.toastr.error(err.error["notLoggedIn"]);
+          localStorage.removeItem("__ex__");
         } else {
           this.toastr.error(err.error["error"] || "Something went wrong.");
         }

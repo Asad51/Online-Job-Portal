@@ -9,7 +9,7 @@ import {
   BsDatepickerConfig
 } from "ngx-bootstrap";
 
-import { UserService } from "./http";
+import { UserService, EmployerService } from "./http";
 import { UserAuthService } from "./services";
 
 @NgModule({
@@ -18,6 +18,7 @@ import { UserAuthService } from "./services";
   providers: [
     UserService,
     UserAuthService,
+    EmployerService,
     BsModalService,
     ComponentLoaderFactory,
     PositioningService,

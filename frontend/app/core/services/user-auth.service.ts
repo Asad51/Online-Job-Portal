@@ -23,4 +23,14 @@ export class UserAuthService {
       return false;
     }
   }
+
+  isEmployerLoggedIn() {
+    this.token = localStorage.getItem("__ex__");
+    if (this.token) {
+      this.userName = this.jwtHelper.decodeToken(this.token).name;
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

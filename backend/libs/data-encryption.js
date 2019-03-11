@@ -1,7 +1,7 @@
 let crypto = require('crypto');
 
 const IV_LENGTH = 16; // For AES, this is always 16
-const KEY_LENGTH = 32; // Must be 256 bytes (32 characters)
+const KEY_LENGTH = 32; // Must be 256 bits (32 characters)
 
 let createIV = function () {
   return crypto.randomBytes(IV_LENGTH);

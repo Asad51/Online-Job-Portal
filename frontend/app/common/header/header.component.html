@@ -30,14 +30,14 @@
         <!-- Nav for users -->
         <ul class="nav navbar-nav ml-auto">
           <li *ngIf="
-              !userAuthService.isJobSeekerLoggedIn() && !isEmployerLoggedIn && !isAdminLoggedIn
+!userAuthService.isJobSeekerLoggedIn() && !userAuthService.isEmployerLoggedIn() && !isAdminLoggedIn
             "
             [matMenuTriggerFor]="loginRegisterModal" class="nav-item">
             <div class="nav-link"><i class="fa fa-user-plus"></i> Register</div>
           </li>
 
           <li *ngIf="
-              !userAuthService.isJobSeekerLoggedIn() && !isEmployerLoggedIn && !isAdminLoggedIn
+!userAuthService.isJobSeekerLoggedIn() && !userAuthService.isEmployerLoggedIn() && !isAdminLoggedIn
             "
             [matMenuTriggerFor]="loginRegisterModal" class="nav-item">
             <div class="nav-link"><i class="fa fa-user"></i> Login</div>
@@ -67,7 +67,7 @@
           </li>
 
           <!-- Employer Drop-down menu -->
-          <li *ngIf="isEmployerLoggedIn" class="nav-item dropdown">
+          <li *ngIf="userAuthService.isEmployerLoggedIn()" class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true"><i
                 class="fa fa-bell"><sup class="badge text-white bg-primary">4</sup></i></a>
             <div class="dropdown-menu">
@@ -77,15 +77,15 @@
             </div>
           </li>
 
-          <li *ngIf="isEmployerLoggedIn" class="nav-item dropdown">
+          <li *ngIf="userAuthService.isEmployerLoggedIn()" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-              aria-expanded="false"><i class="fa fa-user"></i> {{ userName }}</a>
+              aria-expanded="false"><i class="fa fa-user"></i> {{ userAuthService.userName }}</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="/"><i class="fa fa-user-secret"></i> Dashboard</a>
               <a class="dropdown-item" href="/"><i class="fa fa-plus-square"></i> Post Job</a>
 
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item"><i class="fa fa-sign-out"></i> Logout</a>
+              <a class="dropdown-item" (click)="onEmployerLogout()"><i class="fa fa-sign-out"></i> Logout</a>
             </div>
           </li>
 

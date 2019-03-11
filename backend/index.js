@@ -17,8 +17,10 @@ app.use('/public/uploads', express.static(path.join(__dirname, 'public/uploads')
 /***** Request Handling *****/
 let errorsRoute = require('./routes/error.route');
 let jobSeekerRoute = require('./routes/job-seeker.route');
+let employerRoute = require('./routes/employer.route');
 
 app.use('/user', jobSeekerRoute);
+app.use('/employer', employerRoute);
 app.use(errorsRoute);
 
 

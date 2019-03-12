@@ -1,3 +1,69 @@
-<p>
-  profile works!
-</p>
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebarEmp">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center mt-3 d-sm-inline d-md-inline">
+      <button class="rounded-circle border-0" id="sidebarToggleEmp"></button>
+    </div>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-block">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/employer/dashboard" routerLinkActive="active">
+        <i class="fa fa-tachometer-alt"></i>
+        <span> Dashboard</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Profile items -->
+    <li class="nav-item">
+      <a class="nav-link" routerLink="profile">
+        <i class="fa fa-user-alt"></i>
+        <span> Profile</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="edit"><i class="fa fa-edit"></i> <span> Edit Profile</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="upload-image"><i class="fa fa-cloud-upload-alt"></i> <span> Upload Profile Image</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="password"><i class="fa fa-exchange-alt"></i> <span> Change Password</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+
+    <!-- Job items -->
+    <li class="nav-item">
+      <a class="nav-link" routerLink="post-job"><i class="fa fa-plus-circle"></i> <span> Post New Job</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="post-job"><i class="fa fa-tasks"></i> <span> Mange Jobs</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" routerLink="post-job"><i class="fa fa-tasks"></i> <span> Mange Candidates</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+      <a style="cursor: pointer;" class="nav-link" (click)="onLogout()">
+        <i class="fa fa-sign-out-alt"></i>
+        <span> Logout</span></a>
+    </li>
+
+  </ul>
+  <!-- End of Sidebar -->
+  <div class="container-fluid">
+    <router-outlet></router-outlet>
+  </div>
+</div>

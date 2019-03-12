@@ -7,6 +7,14 @@ let employerSchema = mongoose.Schema({
   phone: String,
   password: String,
   imagePath: String,
+  company: {
+    name: String,
+    location: String,
+    companyType: String,
+    industryType: String,
+    companySize: String,
+    website: String
+  },
   rating: {
     type: Number,
     default: 0.0

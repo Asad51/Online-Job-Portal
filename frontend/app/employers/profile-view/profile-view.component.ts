@@ -1,15 +1,17 @@
-import { ToastrService } from "ngx-toastr";
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
+import { EmployerService } from "../../core/http";
+
 declare let $: any;
-import { EmployerService } from "../core/http";
 
 @Component({
-  selector: "app-profile",
-  templateUrl: "./profile.component.html",
-  styleUrls: ["./profile.component.scss"]
+  selector: "app-profile-view",
+  templateUrl: "./profile-view.component.html",
+  styleUrls: ["./profile-view.component.scss"]
 })
-export class ProfileComponent implements OnInit {
+export class ProfileViewComponent implements OnInit {
+  employer: Object = null;
   constructor(
     private employerService: EmployerService,
     private toastr: ToastrService,
@@ -17,18 +19,14 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    $("#sidebarToggleEmp").on("click", function(e) {
-      $("body").toggleClass("sidebar-toggled");
-      $(".sidebar").toggleClass("toggled");
-    });
+    this.getEmployerProfile();
   }
 
-  onLogout() {
-    this.employerService.logout().subscribe(
+  getEmployerProfile() {
+    this.employerService.getProfile().subscribe(
       data => {
-        this.toastr.info(data["success"]);
-        localStorage.removeItem("__ex__");
-        this.router.navigate(["/"]);
+        this.employer = data;
+        console.log(this.employer);
       },
       err => {
         this.toastr.error(

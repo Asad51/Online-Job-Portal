@@ -302,6 +302,10 @@ module.exports = {
     }, res);
   },
 
+  updateCompany: (req, res, next) => {
+
+  },
+
   deleteAccount: (req, res, next) => {
     Employer.deleteOne({
       _id: res.locals.id

@@ -3,9 +3,18 @@ import { Routes, RouterModule } from "@angular/router";
 
 import { ProfileComponent } from "./profile.component";
 import { PageNotFoundComponent } from "../shared/page-not-found/page-not-found.component";
+import { SummaryComponent } from "./summary/summary.component";
+import { ProfileViewComponent } from "./profile-view/profile-view.component";
 
 const routes: Routes = [
-  { path: "profile", component: ProfileComponent },
+  {
+    path: "dashboard",
+    component: ProfileComponent,
+    children: [
+      { path: "", component: SummaryComponent },
+      { path: "profile", component: ProfileViewComponent }
+    ]
+  },
   { path: "**", component: PageNotFoundComponent }
 ];
 

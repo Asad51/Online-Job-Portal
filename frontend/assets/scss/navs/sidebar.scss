@@ -91,7 +91,8 @@
     }
   }
 
-  #sidebarToggle {
+  #sidebarToggle,
+  #sidebarToggleEmp {
     width: 2.5rem;
     height: 2.5rem;
     text-align: center;
@@ -118,7 +119,8 @@
     width: 0 !important;
     overflow: hidden;
 
-    #sidebarToggle::after {
+    #sidebarToggle::after,
+    #sidebarToggleEmp::after {
       content: "\f105";
       font-family: "Font Awesome 5 Free";
       margin-left: 0.25rem;
@@ -135,6 +137,7 @@
     width: $sidebar-base-width !important;
 
     .nav-item {
+
       // Accordion
       .collapse {
         position: relative;
@@ -201,6 +204,7 @@
       width: $sidebar-collapsed-width !important;
 
       .nav-item {
+
         // Accordion
         .collapse {
           position: absolute;
@@ -299,7 +303,8 @@
   }
 
   // Color the sidebar toggler
-  #sidebarToggle {
+  #sidebarToggle,
+  #sidebarToggleEmp {
     background-color: $gray-200;
 
     &::after {
@@ -354,7 +359,8 @@
   }
 
   // Color the sidebar toggler
-  #sidebarToggle {
+  #sidebarToggle,
+  #sidebarToggleEmp {
     background-color: fade-out($white, 0.8);
 
     &::after {
@@ -367,7 +373,9 @@
   }
 
   &.toggled {
-    #sidebarToggle::after {
+
+    #sidebarToggle::after,
+    #sidebarToggleEmp::after {
       color: fade-out($white, 0.5);
     }
   }

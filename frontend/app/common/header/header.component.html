@@ -2,24 +2,11 @@
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
       <!-- Website Logo -->
-      <a
-        style="cursor: pointer;"
-        class="navbar-brand"
-        routerLink="/"
-        routerLinkActive="active"
-        >Job Portal</a
-      >
+      <a style="cursor: pointer;" class="navbar-brand" routerLink="/" routerLinkActive="active">Job Portal</a>
 
       <!-- Navbar Collapse button for mobile view -->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+        aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -28,92 +15,54 @@
         <!-- Nav for all -->
         <ul class="nav navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" routerLink="/jobs" routerLinkActive="active"
-              >Jobs</a
-            >
+            <a class="nav-link" routerLink="/jobs" routerLinkActive="active">Jobs</a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link"
-              routerLink="/employers"
-              routerLinkActive="active"
-              >Employers</a
-            >
+            <a class="nav-link" routerLink="/employers" routerLinkActive="active">Employers</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/contact" routerLinkActive="active"
-              ><i class="fa fa-phone"></i> Contact Us</a
-            >
+            <a class="nav-link" routerLink="/contact" routerLinkActive="active"><i class="fa fa-phone"></i> Contact Us</a>
           </li>
         </ul>
 
         <!-- Nav for users -->
         <ul class="nav navbar-nav ml-auto">
-          <li
-            *ngIf="
+          <li *ngIf="
               !userAuthService.isJobSeekerLoggedIn() &&
               !userAuthService.isEmployerLoggedIn() &&
               !isAdminLoggedIn
             "
-            [matMenuTriggerFor]="loginRegisterModal"
-            class="nav-item"
-          >
+            [matMenuTriggerFor]="loginRegisterModal" class="nav-item">
             <div class="nav-link"><i class="fa fa-user-plus"></i> Register</div>
           </li>
 
-          <li
-            *ngIf="
+          <li *ngIf="
               !userAuthService.isJobSeekerLoggedIn() &&
               !userAuthService.isEmployerLoggedIn() &&
               !isAdminLoggedIn
             "
-            [matMenuTriggerFor]="loginRegisterModal"
-            class="nav-item"
-          >
+            [matMenuTriggerFor]="loginRegisterModal" class="nav-item">
             <div class="nav-link"><i class="fa fa-user"></i> Login</div>
           </li>
 
           <!-- Job Seekers Drop-down menu -->
-          <li
-            *ngIf="userAuthService.isJobSeekerLoggedIn()"
-            [matMenuTriggerFor]="notificationMenu"
-            class="nav-item"
-          >
+          <li *ngIf="userAuthService.isJobSeekerLoggedIn()" [matMenuTriggerFor]="notificationMenu" class="nav-item">
             <a class="nav-link">
-              <i class="fa fa-bell"
-                ><sup class="badge text-white bg-primary">{{
+              <i class="fa fa-bell"><sup class="badge text-white bg-primary">{{
                   notifications.length
-                }}</sup></i
-              ></a
-            >
+                  }}</sup></i></a>
           </li>
 
-          <li
-            *ngIf="userAuthService.isJobSeekerLoggedIn()"
-            class="nav-item dropdown"
-          >
-            <a
-              class="nav-link dropdown-toggle"
-              data-toggle="dropdown"
-              href="#"
-              role="button"
-              aria-haspopup="true"
-              aria-expanded="false"
-              ><i class="fa fa-user"></i> {{ userAuthService.userName }}</a
-            >
+          <li *ngIf="userAuthService.isJobSeekerLoggedIn()" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+              aria-expanded="false"><i class="fa fa-user"></i> {{ userAuthService.userName }}</a>
 
             <div class="dropdown-menu">
-              <a class="dropdown-item" routerLink="/user/dashboard"
-                ><i class="fa fa-user-alt"></i> Dashboard</a
-              >
-              <a class="dropdown-item" routerLink="/user/dashboard/edit"
-                ><i class="fa fa-edit"></i> Edit Profile</a
-              >
+              <a class="dropdown-item" routerLink="/user/dashboard"><i class="fa fa-user-alt"></i> Dashboard</a>
+              <a class="dropdown-item" routerLink="/user/dashboard/edit"><i class="fa fa-edit"></i> Edit Profile</a>
 
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" routerLink="/jobs"
-                ><i class="fa fa-search-plus"></i> Search Jobs</a
-              >
+              <a class="dropdown-item" routerLink="/jobs"><i class="fa fa-search-plus"></i> Search Jobs</a>
 
               <div class="dropdown-divider"></div>
               <div class="dropdown-item" (click)="onJobSeekerLogout()">
@@ -123,60 +72,36 @@
           </li>
 
           <!-- Employer Drop-down menu -->
-          <li
-            *ngIf="userAuthService.isEmployerLoggedIn()"
-            class="nav-item dropdown"
-          >
-            <a
-              class="nav-link"
-              data-toggle="dropdown"
-              href="#"
-              role="button"
-              aria-haspopup="true"
-              aria-expanded="true"
-              ><i class="fa fa-bell"
-                ><sup class="badge text-white bg-primary">4</sup></i
-              ></a
-            >
+          <li *ngIf="userAuthService.isEmployerLoggedIn()" class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true"><i
+                class="fa fa-bell"><sup class="badge text-white bg-primary">4</sup></i></a>
             <div class="dropdown-menu">
-              <div
-                class="dropdown-item"
-                *ngFor="let notification of notifications"
-              >
+              <div class="dropdown-item" *ngFor="let notification of notifications">
                 {{ notification }}
               </div>
             </div>
           </li>
 
-          <li
-            *ngIf="userAuthService.isEmployerLoggedIn()"
-            class="nav-item dropdown"
-          >
-            <div
-              class="nav-link dropdown-toggle"
-              data-toggle="dropdown"
-              href="#"
-              role="button"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
+          <li *ngIf="userAuthService.isEmployerLoggedIn()" class="nav-item dropdown">
+            <div class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+              aria-expanded="false">
               <i class="fa fa-user"></i> {{ userAuthService.userName }}
             </div>
             <div class="dropdown-menu">
-              <div class="dropdown-item" routerLink="/employer/profile">
-                <i class="fa fa-user-alt"></i> Profile
+              <div class="dropdown-item" routerLink="/employer/dashboard">
+                <i class="fa fa-user-alt"></i> Dashboard
               </div>
 
-              <div class="dropdown-item" routerLink="/employer/profile/edit">
+              <div class="dropdown-item" routerLink="/employer/dashboard/edit">
                 <i class="fa fa-user-edit"></i> Edit Profile
               </div>
 
-              <div class="dropdown-item" routerLink="/employer/post">
+              <div class="dropdown-item" routerLink="/employer/dashboard/post-job">
                 <i class="fa fa-plus-square"></i> Post A Job
               </div>
 
-              <div class="dropdown-item" routerLink="/employer/profile/jobs">
-                <i class="fa fa-tasks"></i> Posted Jobs
+              <div class="dropdown-item" routerLink="/employer/dashboard/manage-jobs">
+                <i class="fa fa-tasks"></i> Manage Jobs
               </div>
 
               <div class="dropdown-divider"></div>
@@ -189,23 +114,12 @@
           <!-- Admin Drop-down menu -->
 
           <li *ngIf="isAdminLoggedIn" class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              data-toggle="dropdown"
-              href="#"
-              role="button"
-              aria-haspopup="true"
-              aria-expanded="false"
-              ><i class="fa fa-user"></i> {{ userName }}</a
-            >
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+              aria-expanded="false"><i class="fa fa-user"></i> {{ userName }}</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="/"
-                ><i class="fa fa-user-secret"></i> Dashboard</a
-              >
+              <a class="dropdown-item" href="/"><i class="fa fa-user-secret"></i> Dashboard</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/"
-                ><i class="fa fa-sign-out"></i> Logout</a
-              >
+              <a class="dropdown-item" href="/"><i class="fa fa-sign-out"></i> Logout</a>
             </div>
           </li>
         </ul>
@@ -235,19 +149,10 @@
       </p>
     </mat-card-content>
     <mat-card-actions class="mx-3">
-      <button
-        mat-stroked-button
-        color="primary"
-        (click)="openJobSeekerLoginModal(loginModal)"
-      >
+      <button mat-stroked-button color="primary" (click)="openJobSeekerLoginModal(loginModal)">
         Sign In
       </button>
-      <button
-        class=" float-right"
-        mat-stroked-button
-        color="accent"
-        (click)="openJobSeekerRegisterModal(registerModal)"
-      >
+      <button class=" float-right" mat-stroked-button color="accent" (click)="openJobSeekerRegisterModal(registerModal)">
         Sign Up
       </button>
     </mat-card-actions>
@@ -264,19 +169,10 @@
       </p>
     </mat-card-content>
     <mat-card-actions class="mx-3">
-      <button
-        mat-stroked-button
-        color="primary"
-        (click)="openEmployerLoginModal(loginModal)"
-      >
+      <button mat-stroked-button color="primary" (click)="openEmployerLoginModal(loginModal)">
         Sign In
       </button>
-      <button
-        class=" float-right"
-        mat-stroked-button
-        color="accent"
-        (click)="openEmployerRegisterModal(registerModal)"
-      >
+      <button class=" float-right" mat-stroked-button color="accent" (click)="openEmployerRegisterModal(registerModal)">
         Sign Up
       </button>
     </mat-card-actions>
@@ -287,12 +183,7 @@
 <ng-template #registerModal>
   <div class="modal-header">
     <h4 class="modal-title m-auto text-center">Create Account</h4>
-    <button
-      type="button"
-      class="close pull-right"
-      aria-label="Close"
-      (click)="closeRegisterModal()"
-    >
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeRegisterModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -300,25 +191,11 @@
     <div class="container">
       <mat-card fxFlex="100%">
         <mat-card-content>
-          <form
-            [formGroup]="registerForm"
-            (ngSubmit)="onRegistrationFormSubmit()"
-            role="form"
-            autocomplete="off"
-            fxFlex="100%"
-            fxLayout="column"
-            fxLayoutGap="20px"
-          >
+          <form [formGroup]="registerForm" (ngSubmit)="onRegistrationFormSubmit()" role="form" autocomplete="off"
+            fxFlex="100%" fxLayout="column" fxLayoutGap="20px">
             <mat-form-field>
-              <input
-                matInput
-                type="text"
-                name="username"
-                id="username"
-                placeholder="Username"
-                formControlName="username"
-                required
-              />
+              <input matInput type="text" name="username" id="username" placeholder="Username" formControlName="username"
+                required />
               <mat-hint>Enter username</mat-hint>
               <mat-error *ngIf="username.invalid && username.errors.minlength">
                 Username must be at least 4 characters long.
@@ -329,15 +206,7 @@
             </mat-form-field>
 
             <mat-form-field>
-              <input
-                matInput
-                type="text"
-                name="name"
-                id="name"
-                placeholder="Your Name"
-                formControlName="name"
-                required
-              />
+              <input matInput type="text" name="name" id="name" placeholder="Your Name" formControlName="name" required />
               <mat-hint>Enter your name</mat-hint>
               <mat-error *ngIf="name.invalid && name.errors.minlength">
                 Name must be at least 4 characters long.
@@ -348,15 +217,7 @@
             </mat-form-field>
 
             <mat-form-field>
-              <input
-                matInput
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Email"
-                formControlName="email"
-                required
-              />
+              <input matInput type="email" name="email" id="email" placeholder="Email" formControlName="email" required />
               <mat-hint>Enter Valid Email</mat-hint>
               <mat-error *ngIf="email.invalid && email.errors.email">
                 Please enter a valid email address
@@ -367,22 +228,11 @@
             </mat-form-field>
 
             <mat-form-field>
-              <input
-                matInput
-                [type]="formHelpers.hide ? 'password' : 'text'"
-                name="password"
-                id="password"
-                placeholder="Password"
-                formControlName="password"
-                required
-              />
-              <mat-icon
-                matSuffix
-                (click)="formHelpers.hide = !formHelpers.hide"
-                >{{
-                  formHelpers.hide ? "visibility_off" : "visibility"
-                }}</mat-icon
-              >
+              <input matInput [type]="formHelpers.hide ? 'password' : 'text'" name="password" id="password" placeholder="Password"
+                formControlName="password" required />
+              <mat-icon matSuffix (click)="formHelpers.hide = !formHelpers.hide">{{
+                formHelpers.hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
               <mat-hint>Enter Your Password</mat-hint>
               <mat-error *ngIf="password.invalid && password.errors.minlength">
                 Password must be at least 6 characters long.
@@ -393,62 +243,35 @@
             </mat-form-field>
 
             <mat-form-field>
-              <input
-                matInput
-                [type]="formHelpers.hide ? 'password' : 'text'"
-                name="confirmPassword"
-                id="confirmPassword"
-                placeholder="Retype Password"
-                formControlName="confirmPassword"
-                required
-              />
-              <mat-icon
-                matSuffix
-                (click)="formHelpers.hide = !formHelpers.hide"
-                >{{
-                  formHelpers.hide ? "visibility_off" : "visibility"
-                }}</mat-icon
-              >
+              <input matInput [type]="formHelpers.hide ? 'password' : 'text'" name="confirmPassword" id="confirmPassword"
+                placeholder="Retype Password" formControlName="confirmPassword" required />
+              <mat-icon matSuffix (click)="formHelpers.hide = !formHelpers.hide">{{
+                formHelpers.hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
               <mat-hint>Enter Your Password Again</mat-hint>
-              <mat-error
-                *ngIf="
+              <mat-error *ngIf="
                   confirmPassword.invalid && confirmPassword.errors.minlength
-                "
-              >
+                ">
                 Password must be at least 6 characters long.
               </mat-error>
-              <mat-error
-                *ngIf="
+              <mat-error *ngIf="
                   confirmPassword.invalid && confirmPassword.errors.required
-                "
-              >
+                ">
                 Password is <strong>required</strong>
               </mat-error>
-              <mat-error
-                *ngIf="
+              <mat-error *ngIf="
                   confirmPassword.invalid &&
                   confirmPassword.errors.MatchPassword
-                "
-              >
+                ">
                 Passwords don't match
               </mat-error>
             </mat-form-field>
 
             <mat-card-actions class="m-3">
-              <button
-                type="submit"
-                mat-flat-button
-                color="primary"
-                [disabled]="!registerForm.valid"
-              >
+              <button type="submit" mat-flat-button color="primary" [disabled]="!registerForm.valid">
                 Sign Up
               </button>
-              <button
-                type="reset"
-                mat-flat-button
-                color="warn"
-                class="float-right"
-              >
+              <button type="reset" mat-flat-button color="warn" class="float-right">
                 Reset
               </button>
             </mat-card-actions>
@@ -458,11 +281,7 @@
         <mat-card-footer class="m-3">
           <h5 class="d-inline">
             Already have account
-            <span
-              style="cursor: pointer"
-              class="text-primary"
-              (click)="openLoginModal(loginModal)"
-            >
+            <span style="cursor: pointer" class="text-primary" (click)="openLoginModal(loginModal)">
               Sign In
             </span>
           </h5>
@@ -476,12 +295,7 @@
 <ng-template #loginModal>
   <div class="modal-header">
     <h4 class="modal-title m-auto">Please Login</h4>
-    <button
-      type="button"
-      class="close pull-right"
-      aria-label="Close"
-      (click)="closeLoginModal()"
-    >
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeLoginModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -489,81 +303,39 @@
     <div class="container">
       <mat-card fxFlex="100%">
         <mat-card-content>
-          <form
-            [formGroup]="loginForm"
-            (ngSubmit)="onLoginFormSubmit()"
-            role="form"
-            autocomplete="off"
-            fxFlex="100%"
-            fxLayout="column"
-            fxLayoutGap="20px"
-          >
+          <form [formGroup]="loginForm" (ngSubmit)="onLoginFormSubmit()" role="form" autocomplete="off" fxFlex="100%"
+            fxLayout="column" fxLayoutGap="20px">
             <mat-form-field class="form-field">
-              <input
-                matInput
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Email"
-                formControlName="email"
-                required
-              />
+              <input matInput type="email" name="email" id="email" placeholder="Email" formControlName="email" required />
               <mat-hint>Enter Valid Email</mat-hint>
               <mat-error *ngIf="loginEmail.invalid && loginEmail.errors.email">
                 Please enter a valid email address
               </mat-error>
-              <mat-error
-                *ngIf="loginEmail.invalid && loginEmail.errors.required"
-              >
+              <mat-error *ngIf="loginEmail.invalid && loginEmail.errors.required">
                 Email is <strong>required</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-form-field class="form-field">
-              <input
-                matInput
-                [type]="formHelpers.hide ? 'password' : 'text'"
-                name="password"
-                id="password"
-                placeholder="Password"
-                formControlName="password"
-                required
-              />
-              <mat-icon
-                matSuffix
-                (click)="formHelpers.hide = !formHelpers.hide"
-                >{{
-                  formHelpers.hide ? "visibility_off" : "visibility"
-                }}</mat-icon
-              >
+              <input matInput [type]="formHelpers.hide ? 'password' : 'text'" name="password" id="password" placeholder="Password"
+                formControlName="password" required />
+              <mat-icon matSuffix (click)="formHelpers.hide = !formHelpers.hide">{{
+                formHelpers.hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
               <mat-hint>Enter Your Password</mat-hint>
-              <mat-error
-                *ngIf="loginPassword.invalid && loginPassword.errors.minlength"
-              >
+              <mat-error *ngIf="loginPassword.invalid && loginPassword.errors.minlength">
                 Password must be at least 6 characters long.
               </mat-error>
-              <mat-error
-                *ngIf="loginPassword.invalid && loginPassword.errors.required"
-              >
+              <mat-error *ngIf="loginPassword.invalid && loginPassword.errors.required">
                 Password is <strong>required</strong>
               </mat-error>
             </mat-form-field>
 
             <mat-card-actions class="m-3">
-              <button
-                type="submit"
-                mat-flat-button
-                color="primary"
-                [disabled]="!loginForm.valid"
-              >
+              <button type="submit" mat-flat-button color="primary" [disabled]="!loginForm.valid">
                 Sign In
               </button>
-              <button
-                type="reset"
-                mat-flat-button
-                color="warn"
-                class="float-right"
-              >
+              <button type="reset" mat-flat-button color="warn" class="float-right">
                 Reset
               </button>
             </mat-card-actions>
@@ -573,11 +345,7 @@
         <mat-card-footer class="m-3">
           <h5 class="d-inline">
             Don't have account
-            <span
-              style="cursor: pointer"
-              class="text-primary"
-              (click)="openRegisterModal(registerModal)"
-            >
+            <span style="cursor: pointer" class="text-primary" (click)="openRegisterModal(registerModal)">
               Sign Up
             </span>
           </h5>

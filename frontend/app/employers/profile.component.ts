@@ -2,26 +2,31 @@ import { ToastrService } from "ngx-toastr";
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { UserService } from "../../core/http";
+import { EmployerService } from "../core/http";
 
 @Component({
-  selector: "app-job-seeker-resume",
-  templateUrl: "./job-seeker-resume.component.html",
-  styleUrls: ["./job-seeker-resume.component.scss"]
+  selector: "app-profile",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.scss"]
 })
-export class JobSeekerResumeComponent implements OnInit {
-  user: Object = null;
+export class ProfileComponent implements OnInit {
+  employer: Object = null;
 
   constructor(
-    private userService: UserService,
+    private employerService: EmployerService,
     private toastr: ToastrService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.userService.getProfile().subscribe(
+    this.getEmployerProfile();
+  }
+
+  getEmployerProfile() {
+    this.employerService.getProfile().subscribe(
       data => {
-        this.user = data;
+        this.employer = data;
+        console.log(this.employer);
       },
       err => {
         this.toastr.error(
@@ -30,7 +35,7 @@ export class JobSeekerResumeComponent implements OnInit {
             "Something went wrong."
         );
         if (err.error && err.error["notLoggedIn"]) {
-          localStorage.removeItem("__jsx__");
+          localStorage.removeItem("__ex__");
           this.router.navigate(["/"]);
         }
       }

@@ -8,6 +8,10 @@ const routes: Routes = [
     path: "user",
     loadChildren: "./job-seeker/job-seeker.module#JobSeekerModule"
   },
+  {
+    path: "employer",
+    loadChildren: "./employers/employers.module#EmployersModule"
+  },
   { path: "**", component: PageNotFoundComponent }
 ];
 

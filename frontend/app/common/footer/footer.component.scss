@@ -1,0 +1,33 @@
+.jpFooter {
+  background-color: #263238;
+  padding: 40px;
+  color: #ffffff;
+
+  ul {
+    padding: 10px 0 0;
+    margin: 0;
+
+    li {
+      list-style: none;
+      padding: 0;
+
+      a {
+        font-size: 14px;
+        color: #92989b;
+        padding-bottom: 6px;
+        text-decoration: none;
+        display: block;
+
+        .footer-icon {
+          height: 18px;
+          display: inline-block;
+          margin-right: 5px;
+        }
+      }
+
+      :hover {
+        color: #d6dfe4;
+      }
+    }
+  }
+}

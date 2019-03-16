@@ -12,7 +12,8 @@ let employerSchema = mongoose.Schema({
     location: String,
     companyType: String,
     industryType: String,
-    companySize: String,
+    maxEmployee: Number,
+    minEmployee: Number,
     website: String
   },
   rating: {

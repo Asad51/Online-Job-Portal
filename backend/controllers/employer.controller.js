@@ -302,8 +302,30 @@ module.exports = {
     }, res);
   },
 
-  updateCompany: (req, res, next) => {
+  updateCompany: async (req, res, next) => {
+    if (Object.keys(req.body).length > 7) {
+      return res.status(422).send({
+        error: "Invalid data format."
+      });
+    }
 
+    let employer = await Employer.findOne({
+      _id: res.locals.id
+    }, 'company');
+
+    let company = {
+      name: req.body.name || employer.company.name || "",
+      location: req.body.location || employer.company.location || "",
+      companyType: req.body.companyType || employer.company.companyType || "",
+      industryType: req.body.industryType || employer.company.industryType || "",
+      maxEmployee: req.body.maxEmployee || employer.company.maxEmployee || 0,
+      minEmployee: req.body.minEmployee || employer.company.minEmployee || 0,
+      website: req.body.website || employer.company.website || "",
+    }
+
+    updateEmployer({
+      _id: req.locals.id
+    }, company, res);
   },
 
   deleteAccount: (req, res, next) => {

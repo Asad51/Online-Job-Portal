@@ -12,6 +12,7 @@ const routes: Routes = [
     path: "employer",
     loadChildren: "./employers/employers.module#EmployersModule"
   },
+  { path: "", loadChildren: "./home/home.module#HomeModule" },
   { path: "**", component: PageNotFoundComponent }
 ];
 

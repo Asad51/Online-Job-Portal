@@ -64,4 +64,12 @@ export class EmployerService {
       )
     });
   }
+
+  changePassword(passwordInfo) {
+    return this.httpClient.put(
+      environment.apiUrl + "employer/password",
+      passwordInfo,
+      this.options
+    );
+  }
 }

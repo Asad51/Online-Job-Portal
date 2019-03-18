@@ -7,7 +7,11 @@ declare let $: any;
   styleUrls: ["./search.component.scss"]
 })
 export class SearchComponent implements OnInit {
-  public quotes = ["Please Read Again.", "Go home.", "The world is round."];
+  public quotes = [
+    "Find the career you deserve.",
+    "Search, find and apply for jobs directly.",
+    "Manage all of the jobs you have applied."
+  ];
 
   constructor() {}
 

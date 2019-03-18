@@ -288,7 +288,6 @@ module.exports = {
     }
 
     let oldPassword = crypto.decrypt(employer.password, secretKeys.employerPasswordKey);
-
     if (req.body.oldPassword != oldPassword) {
       return res.status(400).send({
         error: "Incorrect Password"
@@ -299,6 +298,8 @@ module.exports = {
       _id: res.locals.id
     }, {
       password: crypto.encrypt(req.body.newPassword, secretKeys.employerPasswordKey)
+    }, {
+      new: true
     }, res);
   },
 

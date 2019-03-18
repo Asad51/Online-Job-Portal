@@ -1,0 +1,261 @@
+<div class="mx-auto my-3">
+  <mat-tab-group mat-stretch-tabs class="rounded mat-elevation-z4">
+    <!-- Personal Information  -->
+    <mat-tab label="Personal">
+      <div class="m-3">
+        <form
+          class="mx-auto"
+          [formGroup]="profileForm"
+          (ngSubmit)="onSubmitProfileForm()"
+          role="form"
+          autocomplete="off"
+        >
+          <div class="row my-4">
+            <mat-form-field class="form-field col-12">
+              <input
+                matInput
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Name"
+                formControlName="name"
+              />
+              <mat-hint>Enter Your Name</mat-hint>
+              <mat-error *ngIf="name.invalid && name.errors.required">
+                Name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row my-4">
+            <mat-form-field class="form-field col-12">
+              <input
+                matInput
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email"
+                formControlName="email"
+              />
+              <mat-hint>Enter Your Email</mat-hint>
+              <mat-error *ngIf="email.invalid && email.errors.required">
+                Email is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="email.invalid && email.errors.email">
+                Enter valid email address.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row my-4">
+            <mat-form-field class="form-field col-12">
+              <input
+                matInput
+                type="text"
+                name="phone"
+                id="phone"
+                placeholder="Phone"
+                formControlName="phone"
+              />
+              <mat-hint>Enter Your Phone Number: 01XXXXXXXXX</mat-hint>
+              <mat-error *ngIf="phone.invalid && phone.errors.required">
+                Phone is <strong>required</strong>
+              </mat-error>
+              <mat-error *ngIf="phone.invalid && phone.errors.pattern">
+                Enter valid phone number.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row my-4">
+            <div class="col float-left">
+              <button
+                type="submit"
+                mat-flat-button
+                color="primary"
+                [disabled]="!profileForm.valid"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-tab>
+
+    <!-- Change Profile Picture -->
+    <mat-tab label="Profile Image">
+      <div class="card m-auto p-5">
+        <!-- <div class="mx-auto my-3 p-2" *ngIf="employer.imagePath">
+          <img height="150px" src="{{employer.imagePath}}" alt="{{employer.name}}">
+        </div> -->
+        <p class="mx-auto row">{{ fileName }}</p>
+        <button
+          class="mx-auto row"
+          mat-stroked-button
+          color="accent"
+          type="button"
+          (click)="filePicker.click()"
+        >
+          {{ changeFileText }}
+        </button>
+
+        <input
+          [formControl]="profileImage"
+          type="file"
+          #filePicker
+          (change)="onChangeImage($event)"
+        />
+        <button
+          class="row"
+          [disabled]="!profileImage.valid"
+          (click)="onImageUpload()"
+          class="mx-auto my-3"
+          mat-raised-button
+          color="primary"
+          type="submit"
+        >
+          Upload
+        </button>
+      </div>
+    </mat-tab>
+    <mat-tab label="Change Password">
+      <div class="m-3">
+        <form
+          [formGroup]="passwordForm"
+          (ngSubmit)="onPasswordFormSubmit()"
+          role="form"
+          autocomplete="off"
+        >
+          <div class="row my-4">
+            <mat-form-field class="form-field col-12">
+              <input
+                matInput
+                [type]="formHelpers.hide ? 'password' : 'text'"
+                name="oldPassword"
+                id="oldPassword"
+                placeholder="Old Password"
+                formControlName="oldPassword"
+                required
+              />
+              <mat-icon
+                matSuffix
+                (click)="formHelpers.hide = !formHelpers.hide"
+                >{{
+                  formHelpers.hide ? "visibility_off" : "visibility"
+                }}</mat-icon
+              >
+              <mat-hint>Enter Your Old Password</mat-hint>
+              <mat-error
+                *ngIf="oldPassword.invalid && oldPassword.errors.minlength"
+              >
+                Password must be at least 6 characters long.
+              </mat-error>
+              <mat-error
+                *ngIf="oldPassword.invalid && oldPassword.errors.required"
+              >
+                Password is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="oldPassword.invalid && oldPassword.errors.pattern"
+              >
+                Password can't contain space characters.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row my-4">
+            <mat-form-field class="form-field col-12">
+              <input
+                matInput
+                [type]="formHelpers.hide ? 'password' : 'text'"
+                name="newPassword"
+                id="newPassword"
+                placeholder="New Password"
+                formControlName="newPassword"
+                required
+              />
+              <mat-icon
+                matSuffix
+                (click)="formHelpers.hide = !formHelpers.hide"
+                >{{
+                  formHelpers.hide ? "visibility_off" : "visibility"
+                }}</mat-icon
+              >
+              <mat-hint>Enter Your New Password</mat-hint>
+              <mat-error
+                *ngIf="newPassword.invalid && newPassword.errors.minlength"
+              >
+                Password must be at least 6 characters long.
+              </mat-error>
+              <mat-error
+                *ngIf="newPassword.invalid && newPassword.errors.required"
+              >
+                Password is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="newPassword.invalid && newPassword.errors.pattern"
+              >
+                Password can't contain space characters.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row my-4">
+            <mat-form-field class="form-field col-12">
+              <input
+                matInput
+                [type]="formHelpers.hide ? 'password' : 'text'"
+                name="confirmPassword"
+                id="confirmPassword"
+                placeholder="Confirm Password"
+                formControlName="confirmPassword"
+                required
+              />
+              <mat-icon
+                matSuffix
+                (click)="formHelpers.hide = !formHelpers.hide"
+                >{{
+                  formHelpers.hide ? "visibility_off" : "visibility"
+                }}</mat-icon
+              >
+              <mat-hint>Enter Your Old Password</mat-hint>
+              <mat-error
+                *ngIf="
+                  confirmPassword.invalid && confirmPassword.errors.minlength
+                "
+              >
+                Password must be at least 6 characters long.
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  confirmPassword.invalid && confirmPassword.errors.required
+                "
+              >
+                Password is <strong>required</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  confirmPassword.invalid && confirmPassword.errors.pattern
+                "
+              >
+                Password can't contain space characters.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row my-3">
+            <div class="col float-left">
+              <button
+                type="submit"
+                mat-flat-button
+                color="primary"
+                [disabled]="!passwordForm.valid"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-tab>
+    <mat-tab label="Update Company"></mat-tab>
+  </mat-tab-group>
+</div>

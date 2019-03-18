@@ -1,3 +1,4 @@
+import { ProfileEditComponent } from "./profile-edit/profile-edit.component";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
@@ -12,7 +13,8 @@ const routes: Routes = [
     component: ProfileComponent,
     children: [
       { path: "", component: SummaryComponent },
-      { path: "profile", component: ProfileViewComponent }
+      { path: "profile", component: ProfileViewComponent },
+      { path: "edit", component: ProfileEditComponent }
     ]
   },
   { path: "**", component: PageNotFoundComponent }

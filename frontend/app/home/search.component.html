@@ -1,23 +1,25 @@
 <div id="search-wrapper">
   <div class="container py-5">
     <div class="owl-carousel owl-theme">
-      <div class="text-carousel text-center" *ngFor="let q of quotes;">
+      <div class="text-carousel text-success text-center" *ngFor="let q of quotes">
         {{ q }}
       </div>
     </div>
-    <form class="mx-auto pt-5" (ngSubmit)="onSubmitSearchForm()">
-      <div class="form-row">
-        <div class="col-6 form-group">
-          <input type="text" placeholder="Enter Keywords" class="form-control">
+    <div class="p-3 mt-5 bg-primary rounded">
+      <form class="mx-auto" (ngSubmit)="onSubmitSearchForm()">
+        <div class="form-row">
+          <div class="col-6 my-0">
+            <input type="text" placeholder="Enter Keywords" class="form-control" aria-label="Search" />
+          </div>
+          <div class="col-5">
+            <input type="text" placeholder="Location" class="form-control" />
+          </div>
+          <div class="col">
+            <button class="btn btn-info">Search</button>
+          </div>
         </div>
-        <div class="col-5">
-          <input type="text" placeholder="Location" class="form-control">
-        </div>
-        <div class="col">
-          <button class="btn btn-primary">Search</button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
     <div class="pt-5 row stats">
       <div class="col">
         <app-total-jobs></app-total-jobs>

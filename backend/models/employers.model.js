@@ -7,6 +7,7 @@ let employerSchema = mongoose.Schema({
   phone: String,
   password: String,
   imagePath: String,
+  notifications: [String],
   company: {
     name: String,
     location: String,

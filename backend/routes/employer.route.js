@@ -51,5 +51,6 @@ app.route('/profile')
 
 app.put('/photo', isEmployerAuthenticated, upload.single('profileImage'), employerController.updateProfileImage);
 app.put('/password', isEmployerAuthenticated, employerController.updatePassword);
+app.put('/company', isEmployerAuthenticated, employerController.updateCompany);
 
 module.exports = app;

@@ -26,6 +26,9 @@ export class ProfileEditComponent implements OnInit {
   formHelpers = {
     hide: true
   };
+  companyLocations = ["dhaka", "rajshahi", "khulna"];
+  companyTypes = ["private", "NGO", "government", "semi-government"];
+  industryTypes = ["IT", "garments"];
 
   constructor(
     private fb: FormBuilder,
@@ -65,6 +68,22 @@ export class ProfileEditComponent implements OnInit {
         ]
       ]
     });
+
+    this.companyForm = this.fb.group({
+      companyName: ["", [Validators.required]],
+      location: ["", [Validators.required]],
+      companyType: ["", [Validators.required]],
+      industryType: ["", [Validators.required]],
+      minEmployee: [
+        "",
+        [Validators.required, Validators.min(1), Validators.max(100000)]
+      ],
+      maxEmployee: [
+        "",
+        [Validators.required, Validators.min(1), Validators.max(100000)]
+      ],
+      website: [""]
+    });
   }
 
   ngOnInit() {
@@ -79,6 +98,13 @@ export class ProfileEditComponent implements OnInit {
         this.name.setValue(data["name"] || "");
         this.email.setValue(data["email"] || "");
         this.phone.setValue(data["phone"] || "");
+        this.companyName.setValue(data["company"].companyName || "");
+        this.location.setValue(data["company"].location || "");
+        this.companyType.setValue(data["company"].companyType || "");
+        this.industryType.setValue(data["company"].industryType || "");
+        this.minEmployee.setValue(data["company"].minEmployee || "");
+        this.maxEmployee.setValue(data["company"].maxEmployee || "");
+        this.website.setValue(data["company"].website || "");
       },
       err => {
         this.errorHandler(err);
@@ -138,6 +164,22 @@ export class ProfileEditComponent implements OnInit {
       };
   }
 
+  onSubmitCompanyForm() {
+    if (this.companyForm.invalid) {
+      return;
+    }
+
+    this.employerService.updateCompany(this.companyForm.value).subscribe(
+      data => {
+        this.toastr.success(data["success"]);
+        this.getEmployerData();
+      },
+      err => {
+        this.errorHandler(err);
+      }
+    );
+  }
+
   errorHandler(err) {
     this.toastr.error(
       err.error["notLoggedIn"] || err.error["error"] || "Something went wrong."
@@ -170,5 +212,33 @@ export class ProfileEditComponent implements OnInit {
 
   get confirmPassword() {
     return this.passwordForm.get("confirmPassword");
+  }
+
+  get companyName() {
+    return this.companyForm.get("companyName");
+  }
+
+  get location() {
+    return this.companyForm.get("location");
+  }
+
+  get companyType() {
+    return this.companyForm.get("companyType");
+  }
+
+  get industryType() {
+    return this.companyForm.get("industryType");
+  }
+
+  get minEmployee() {
+    return this.companyForm.get("minEmployee");
+  }
+
+  get maxEmployee() {
+    return this.companyForm.get("maxEmployee");
+  }
+
+  get website() {
+    return this.companyForm.get("website");
   }
 }

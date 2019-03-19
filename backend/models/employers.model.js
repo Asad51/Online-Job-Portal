@@ -9,7 +9,7 @@ let employerSchema = mongoose.Schema({
   imagePath: String,
   notifications: [String],
   company: {
-    name: String,
+    companyName: String,
     location: String,
     companyType: String,
     industryType: String,

@@ -105,7 +105,6 @@
         />
         <button
           class="row"
-          [disabled]="!profileImage.valid"
           (click)="onImageUpload()"
           class="mx-auto my-3"
           mat-raised-button
@@ -256,6 +255,165 @@
         </form>
       </div>
     </mat-tab>
-    <mat-tab label="Update Company"></mat-tab>
+    <mat-tab label="Update Company">
+      <div class="m-3">
+        <form
+          [formGroup]="companyForm"
+          (ngSubmit)="onSubmitCompanyForm()"
+          role="form"
+          autocomplete="off"
+        >
+          <div class="row my-4">
+            <mat-form-field class="form-field col-12">
+              <input
+                matInput
+                type="text"
+                name="companyName"
+                id="companyName"
+                placeholder="Company Name"
+                formControlName="companyName"
+              />
+              <mat-hint>Enter Company Name</mat-hint>
+              <mat-error
+                *ngIf="companyName.invalid && companyName.errors.required"
+              >
+                Name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row my-4">
+            <mat-form-field class="form-field col-12">
+              <mat-label>Company Location</mat-label>
+              <mat-select
+                name="location"
+                id="location"
+                formControlName="location"
+              >
+                <mat-option value="">None</mat-option>
+                <mat-option *ngFor="let cl of companyLocations" [value]="cl">{{
+                  cl | titlecase
+                }}</mat-option>
+              </mat-select>
+              <mat-hint>Select Company Location</mat-hint>
+              <mat-error *ngIf="location.invalid && location.errors.required">
+                Location is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row my-4">
+            <mat-form-field class="form-field col-12">
+              <mat-label>Company Type</mat-label>
+              <mat-select
+                name="companyType"
+                id="companyType"
+                formControlName="companyType"
+              >
+                <mat-option value="">None</mat-option>
+                <mat-option *ngFor="let ct of companyTypes" [value]="ct">{{
+                  ct | titlecase
+                }}</mat-option>
+              </mat-select>
+              <mat-hint>Select Company Type</mat-hint>
+              <mat-error
+                *ngIf="companyType.invalid && companyType.errors.required"
+              >
+                Company Type is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row my-4">
+            <mat-form-field class="form-field col-12">
+              <mat-label>Industry Type</mat-label>
+              <mat-select
+                name="industryType"
+                id="industryType"
+                formControlName="industryType"
+              >
+                <mat-option value="">None</mat-option>
+                <mat-option *ngFor="let it of industryTypes" [value]="it">{{
+                  it | titlecase
+                }}</mat-option>
+              </mat-select>
+              <mat-hint>Select Industry Type</mat-hint>
+              <mat-error
+                *ngIf="industryType.invalid && industryType.errors.required"
+              >
+                Industry Type is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row my-4">
+            <mat-form-field class="form-field col-6">
+              <input
+                matInput
+                type="number"
+                name="minEmployee"
+                id="minEmployee"
+                placeholder="Minimum Employee"
+                formControlName="minEmployee"
+              />
+              <mat-hint>Minimum Employee</mat-hint>
+              <mat-error
+                *ngIf="
+                  minEmployee.invalid &&
+                  (minEmployee.required || minEmployee.min || minEmployee.max)
+                "
+              >
+                Must be between 1 and 100000
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field col-6">
+              <input
+                matInput
+                type="number"
+                name="maxEmployee"
+                id="maxEmployee"
+                placeholder="Maximum Employee"
+                formControlName="maxEmployee"
+              />
+              <mat-hint>Maximum Employee</mat-hint>
+              <mat-error
+                *ngIf="
+                  maxEmployee.invalid &&
+                  (maxEmployee.required || maxEmployee.min || maxEmployee.max)
+                "
+              ></mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="row my-4">
+            <mat-form-field class="form-field col-12">
+              <input
+                matInput
+                type="url"
+                name="website"
+                id="website"
+                placeholder="Website"
+                formControlName="website"
+              />
+              <mat-hint>Enter Company Website</mat-hint>
+              <mat-error *ngIf="website.invalid">
+                Enter valid url.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="row my-3">
+            <div class="col float-left">
+              <button
+                type="submit"
+                mat-flat-button
+                color="primary"
+                [disabled]="!companyForm.valid"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </mat-tab>
   </mat-tab-group>
 </div>

@@ -72,4 +72,12 @@ export class EmployerService {
       this.options
     );
   }
+
+  updateCompany(companyInfo) {
+    return this.httpClient.put(
+      environment.apiUrl + "employer/company",
+      companyInfo,
+      this.options
+    );
+  }
 }

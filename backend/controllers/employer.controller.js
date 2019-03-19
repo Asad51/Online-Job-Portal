@@ -7,6 +7,7 @@ let secretKeys = require("../config/secret.key");
 
 function updateEmployer(conditions, employer, options, res) {
   Employer.updateOne(conditions, employer, options, (err, result) => {
+    console.log(result.n);
     if (err || !result.n) {
       return res.status(500).send({
         error: "Server Error."
@@ -315,7 +316,7 @@ module.exports = {
     }, 'company');
 
     let company = {
-      name: req.body.name || employer.company.name || "",
+      companyName: req.body.companyName || employer.company.companyName || "",
       location: req.body.location || employer.company.location || "",
       companyType: req.body.companyType || employer.company.companyType || "",
       industryType: req.body.industryType || employer.company.industryType || "",
@@ -325,8 +326,12 @@ module.exports = {
     }
 
     updateEmployer({
-      _id: req.locals.id
-    }, company, res);
+      _id: res.locals.id
+    }, {
+      company: company
+    }, {
+      new: true
+    }, res);
   },
 
   deleteAccount: (req, res, next) => {

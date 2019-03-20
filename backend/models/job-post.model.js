@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 let jobSchema = mongoose.Schema({
-  jobId: Number,
   imagePath: String,
   jobTitle: String,
   company: String,

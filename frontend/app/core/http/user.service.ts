@@ -9,9 +9,10 @@ export class UserService {
   private options: Object = {
     observe: "body",
     withCredentials: true,
-    headers: new HttpHeaders()
-      .append("Content-Type", "application/json")
-      .append("__jsx__", localStorage.getItem("__jsx__"))
+    headers: new HttpHeaders().append(
+      "__jsx__",
+      localStorage.getItem("__jsx__")
+    )
   };
 
   constructor(private httpClient: HttpClient) {}

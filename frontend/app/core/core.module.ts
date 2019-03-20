@@ -1,3 +1,4 @@
+import { JobService } from "./http/job.service";
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
@@ -19,6 +20,7 @@ import { UserAuthService } from "./services";
     UserService,
     UserAuthService,
     EmployerService,
+    JobService,
     BsModalService,
     ComponentLoaderFactory,
     PositioningService,

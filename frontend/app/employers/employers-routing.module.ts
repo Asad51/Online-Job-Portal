@@ -1,3 +1,4 @@
+import { PostJobComponent } from "./post-job/post-job.component";
 import { ProfileEditComponent } from "./profile-edit/profile-edit.component";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
@@ -14,7 +15,8 @@ const routes: Routes = [
     children: [
       { path: "", component: SummaryComponent },
       { path: "profile", component: ProfileViewComponent },
-      { path: "edit", component: ProfileEditComponent }
+      { path: "edit", component: ProfileEditComponent },
+      { path: "post-job", component: PostJobComponent }
     ]
   },
   { path: "**", component: PageNotFoundComponent }

@@ -1,0 +1,128 @@
+<div class="m-3 container-fluid">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="text-center">Job Post Form</mat-card-title>
+      <hr>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="jobForm" (ngSubmit)="onSubmitJobForm()" autocomplete="off" role="form">
+        <div class="row my-4">
+          <mat-form-field class="form-field col-12">
+            <input matInput type="text" name="jobTitle" id="jobTitle" placeholder="Job Title"
+              formControlName="jobTitle" />
+            <mat-hint>Enter Job Title</mat-hint>
+            <mat-error *ngIf="jobTitle.invalid && jobTitle.errors.required">
+              Job Title is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row my-4">
+          <mat-form-field class="form-field col-12">
+            <input matInput type="text" name="location" id="location" placeholder="Job Location"
+              formControlName="location" />
+            <mat-hint>Enter Job location</mat-hint>
+            <mat-error *ngIf="location.invalid && location.errors.required">
+              Job location is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row my-4">
+          <mat-form-field class="form-field col-12">
+            <input matInput type="number" name="vacancy" id="vacancy" placeholder="vacancy" formControlName="vacancy" />
+            <mat-hint>Enter Job location</mat-hint>
+            <mat-error *ngIf="vacancy.invalid && vacancy.errors.required">
+              vacancy is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row my-4">
+          <mat-form-field class="form-field col-12">
+            <mat-label>Job Type</mat-label>
+            <mat-select name="type" id="type" formControlName="type">
+              <mat-option value="">None</mat-option>
+              <mat-option *ngFor="let t of jobTypes" [value]="t">{{
+                  t | titlecase
+                }}</mat-option>
+            </mat-select>
+            <mat-hint>Select Job Type</mat-hint>
+            <mat-error *ngIf="type.invalid && type.errors.required">
+              Job Type is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="row my-4">
+          <mat-form-field class="form-field col-12">
+            <input matInput type="text" name="company" id="company" placeholder="company" formControlName="company" />
+            <mat-hint>Enter company name</mat-hint>
+            <mat-error *ngIf="company.invalid && company.errors.required">
+              company name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="row my-4">
+          <mat-form-field class="form-field col-12">
+            <mat-label>Educational Requirements</mat-label>
+            <mat-select name="educationalRequirements" id="educationalRequirements"
+              formControlName="educationalRequirements">
+              <mat-option value="">None</mat-option>
+              <mat-option *ngFor="let d of degrees" [value]="d">{{
+                  d | uppercase
+                }}</mat-option>
+            </mat-select>
+            <mat-hint>Select Degree</mat-hint>
+            <mat-error *ngIf="educationalRequirements.invalid && educationalRequirements.errors.required">
+              Degree is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="row my-4">
+          <mat-form-field class="form-field col-12">
+            <mat-label>Experience</mat-label>
+            <mat-select name="experience" id="experience" formControlName="experience">
+              <mat-option value="">None</mat-option>
+              <mat-option *ngFor="let e of experiences" [value]="e">{{
+                  e
+                }}</mat-option>
+            </mat-select>
+            <mat-hint>Select experience</mat-hint>
+            <mat-error *ngIf="experience.invalid && experience.errors.required">
+              experience is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="row my-4">
+          <mat-form-field class="form-field col-12">
+            <input matInput type="number" name="salary" id="salary" placeholder="salary" formControlName="salary" />
+            <mat-hint>Enter salary</mat-hint>
+            <mat-error *ngIf="salary.invalid && salary.errors.required">
+              salary is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="salary.invalid && salary.errors.min">
+              salary is greater than 0
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row my-4">
+          <mat-form-field class="form-field col-12">
+            <input matInput type="text" name="deadline" id="deadline" placeholder="deadline" formControlName="deadline"
+              bsDatepicker [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }" required />
+            <mat-hint>Format : YYYY-MM-DD</mat-hint>
+            <mat-error *ngIf="deadline.invalid && deadline.errors.required">
+              deadline is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="row my-3">
+          <div class="col">
+            <button type="submit" mat-flat-button color="primary" [disabled]="!jobForm.valid">Submit</button>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

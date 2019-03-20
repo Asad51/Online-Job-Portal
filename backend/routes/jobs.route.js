@@ -1,4 +1,6 @@
 const app = require("express")();
+const jwt = require('jsonwebtoken');
+let secretKeys = require('../config/secret.key');
 
 let jobController = require('../controllers/jobs.controller');
 
@@ -54,3 +56,5 @@ app.route('/:id')
   .get(jobController.getJobById)
   .put(isEmployerAuthenticated, jobController.updateJob)
   .delete(isEmployerAuthenticated, jobController.deleteJob);
+
+module.exports = app;

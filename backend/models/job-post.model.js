@@ -4,7 +4,10 @@ let jobSchema = mongoose.Schema({
   imagePath: String,
   jobTitle: String,
   company: String,
-  publishedOn: Date,
+  publishedOn: {
+    type: Date,
+    default: Date.now
+  },
   vacancy: Number,
   type: String,
   experience: String,

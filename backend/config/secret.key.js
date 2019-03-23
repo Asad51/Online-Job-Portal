@@ -7,6 +7,7 @@ module.exports = {
   employerEmailIV: "dggdTer5R%rSs^fD",
   employerPasswordKey: "&hs#D63e^5F&hs2w^5F&hs2w^5F&hs2w",
   adminEmailKey: "^5F&hs2w^5^Hgs2w^5F&hs2w^5F&hs2w",
+  adminEmailIV: "^5F&hs2w^5^Hgs2w^5F&hs2w^5F&hs2w",
   adminPasswordKey: "&hs#D63e^5F&hs2w^5F&(jfT^5F&hs2w",
   jwt: "73tRrw%6^79*twte(&e"
 };

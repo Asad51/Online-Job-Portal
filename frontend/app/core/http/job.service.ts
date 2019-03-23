@@ -47,4 +47,6 @@ export class JobService {
   deleteJob(id) {
     return this.http.delete(environment.apiUrl + "jobs/" + id, this.options1);
   }
+
+  getAllCategories() {}
 }

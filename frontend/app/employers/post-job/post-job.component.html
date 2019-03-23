@@ -79,17 +79,11 @@
 
         <div class="row my-4">
           <mat-form-field class="form-field col-12">
-            <mat-label>Educational Requirements</mat-label>
-            <mat-select name="educationalRequirements" id="educationalRequirements"
-              formControlName="educationalRequirements">
-              <mat-option value="">None</mat-option>
-              <mat-option *ngFor="let d of degrees" [value]="d">{{
-                  d | uppercase
-                }}</mat-option>
-            </mat-select>
-            <mat-hint>Select Degree</mat-hint>
+            <textarea matInput type="text" name="educationalRequirements" id="educationalRequirements"
+              placeholder="Educational Requirements" formControlName="educationalRequirements"></textarea>
+            <mat-hint>Enter Educational Requirements</mat-hint>
             <mat-error *ngIf="educationalRequirements.invalid && educationalRequirements.errors.required">
-              Degree is <strong>required</strong>
+              Educational Requirements is <strong>required</strong>
             </mat-error>
           </mat-form-field>
         </div>
@@ -129,6 +123,17 @@
             <mat-hint>Format : YYYY-MM-DD</mat-hint>
             <mat-error *ngIf="deadline.invalid && deadline.errors.required">
               deadline is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="row my-4">
+          <mat-form-field class="form-field col-12">
+            <textarea matInput type="text" name="jobResponsibilities" id="jobResponsibilities"
+              placeholder="Job Responsibilities" formControlName="jobResponsibilities"></textarea>
+            <mat-hint>Enter Job Responsibilities</mat-hint>
+            <mat-error *ngIf="jobResponsibilities.invalid && jobResponsibilities.errors.required">
+              Job Responsibilities is <strong>required</strong>
             </mat-error>
           </mat-form-field>
         </div>

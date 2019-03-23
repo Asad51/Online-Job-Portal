@@ -13,6 +13,7 @@ const routes: Routes = [
     loadChildren: "./employers/employers.module#EmployersModule"
   },
   { path: "admin", loadChildren: "./admin/admin.module#AdminModule" },
+  { path: "jobs", loadChildren: "./jobs/jobs.module#JobsModule" },
   { path: "", loadChildren: "./home/home.module#HomeModule" },
   { path: "**", component: PageNotFoundComponent }
 ];

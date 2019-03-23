@@ -1,0 +1,60 @@
+<div class="container mx-auto my-5" *ngIf="job">
+  <h4 class="text-dark border-bottom border-primary mb-3">Job Details</h4>
+  <div class="p-3" style="background-color: #F1F1F1">
+    <div class="row">
+      <div class="col-4">Job Title</div>
+      <div class="col-1">:</div>
+      <div class="col">{{ job.jobTitle }}</div>
+    </div>
+    <div class="row">
+      <div class="col-4">Job Type</div>
+      <div class="col-1">:</div>
+      <div class="col">{{ job.type }}</div>
+    </div>
+    <div class="row">
+      <div class="col-4">Job Category</div>
+      <div class="col-1">:</div>
+      <div class="col">{{ job.category }}</div>
+    </div>
+    <div class="row">
+      <div class="col-4">Job Location</div>
+      <div class="col-1">:</div>
+      <div class="col">{{ job.location }}</div>
+    </div>
+    <div class="row">
+      <div class="col-4">Company</div>
+      <div class="col-1">:</div>
+      <div class="col">{{ job.company }}</div>
+    </div>
+    <div class="row">
+      <div class="col-4">Vacancy</div>
+      <div class="col-1">:</div>
+      <div class="col">{{ job.vacancy }}</div>
+    </div>
+    <div class="row">
+      <div class="col-4">Experience</div>
+      <div class="col-1">:</div>
+      <div class="col">{{ job.experience }}</div>
+    </div>
+    <div class="row">
+      <div class="col-4">Salary</div>
+      <div class="col-1">:</div>
+      <div class="col" *ngIf="job.salary">{{ job.salary | currency:"BDT " }}</div>
+      <div class="col" *ngIf="!job.salary">Negotiable</div>
+    </div>
+    <div class="row">
+      <div class="col-4">Deadline</div>
+      <div class="col-1">:</div>
+      <div class="col">{{ deadline }}</div>
+    </div>
+    <button mat-raised-button color="primary" class="mt-2">Apply</button>
+    <div class="my-3">
+      <h5 class="border-bottom border-success d-block">Job Responsibilities</h5>
+      <pre>{{ job.jobResponsibilities }}</pre>
+    </div>
+    <div class="mb-3">
+      <h5 class="border-bottom border-success d-block">Educational Requirements</h5>
+      <pre>{{ job.educationalRequirements }}</pre>
+    </div>
+  </div>
+</div>

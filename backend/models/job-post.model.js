@@ -15,7 +15,7 @@ let jobSchema = mongoose.Schema({
   location: String,
   salary: Number,
   deadline: Date,
-  jobResponsibilities: [String],
+  jobResponsibilities: String,
   educationalRequirements: String,
   appliedApplicants: [String]
 });

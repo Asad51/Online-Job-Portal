@@ -39,7 +39,8 @@ export class PostJobComponent implements OnInit {
       experience: ["", [Validators.required]],
       salary: ["0", [Validators.required, Validators.min(0)]],
       deadline: ["", Validators.required],
-      educationalRequirements: ["", [Validators.required]]
+      educationalRequirements: ["", [Validators.required]],
+      jobResponsibilities: ["", Validators.required]
     });
   }
 
@@ -113,5 +114,8 @@ export class PostJobComponent implements OnInit {
 
   get educationalRequirements() {
     return this.jobForm.get("educationalRequirements");
+  }
+  get jobResponsibilities() {
+    return this.jobForm.get("jobResponsibilities");
   }
 }

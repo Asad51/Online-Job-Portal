@@ -10,6 +10,7 @@ let jobSchema = mongoose.Schema({
   },
   vacancy: Number,
   type: String,
+  category: String,
   experience: String,
   location: String,
   salary: Number,

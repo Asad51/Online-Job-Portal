@@ -1,3 +1,7 @@
-<p>
-  category works!
-</p>
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-4" *ngFor="let category of categories">
+      <i class="fa fa-chevron-right"></i> {{ category.name }} ({{ category['jobId'].length }})
+    </div>
+  </div>
+</div>

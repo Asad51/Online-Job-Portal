@@ -35,7 +35,7 @@ app.post("/categories", isAdminAuthenticated, (req, res, next) => {
   let newCategory = new Category({
     name: req.body.name,
     value: req.body.value,
-    jobId: []
+    jobId: req.body.jobId || []
   });
 
   newCategory.save(newCategory, (err, cat) => {
@@ -45,9 +45,22 @@ app.post("/categories", isAdminAuthenticated, (req, res, next) => {
       });
     }
 
-    res.status({
+    res.status(201).send({
       "success": "Category added."
     });
+  });
+});
+
+app.get("/categories", (req, res, next) => {
+  Category.find({}, async (err, categories) => {
+    if (err) {
+      return res.status(500).send({
+        error: "Server Error."
+      });
+    }
+    res.status(201).send(
+      categories
+    );
   });
 });
 

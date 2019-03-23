@@ -1,4 +1,5 @@
 const Job = require("../models/job-post.model");
+const Category = require('../models/category.model');
 
 module.exports = {
   post: async (req, res, next) => {
@@ -9,6 +10,7 @@ module.exports = {
       publishedOn: req.body.publishedOn || "",
       vacancy: req.body.vacancy,
       type: req.body.type || "",
+      category: req.body.category || "",
       experience: req.body.experience,
       location: req.body.location,
       salary: req.body.salary,
@@ -18,12 +20,21 @@ module.exports = {
       appliedApplicants: []
     });
 
-    job.save(job, (err, jobPosted) => {
+    job.save(job, async (err, jobPosted) => {
       if (err) {
         return res.status(500).send({
           error: "Server Error."
         });
       }
+      let category = await Category.findOne({
+        value: req.body.category
+      });
+      category.jobId.push(String(job._id));
+      Category.updateOne({
+        _id: category._id
+      }, {
+        jobId: category.jobId
+      }, (err, r) => {});
       res.status(201).send({
         success: "Job Posted Successfully."
       });
@@ -77,15 +88,12 @@ module.exports = {
         location: req.body.location || job.location,
         salary: req.body.salary || job.salary,
         deadline: req.body.deadline || job.deadline,
-        jobResponsibilities:
-          req.body.jobResponsibilities || job.jobResponsibilities,
-        educationalRequirements:
-          req.body.educationalRequirements || job.educationalRequirements,
+        jobResponsibilities: req.body.jobResponsibilities || job.jobResponsibilities,
+        educationalRequirements: req.body.educationalRequirements || job.educationalRequirements,
         appliedApplicants: req.body.appliedApplicants || job.appliedApplicants
       };
 
-      Job.updateOne(
-        {
+      Job.updateOne({
           _id: id
         },
         updatedJob,
@@ -117,8 +125,7 @@ module.exports = {
             error: "Not Authorized"
           });
         }
-        Job.deleteOne(
-          {
+        Job.deleteOne({
             _id: id
           },
           (err, result) => {

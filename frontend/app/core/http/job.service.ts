@@ -48,5 +48,7 @@ export class JobService {
     return this.http.delete(environment.apiUrl + "jobs/" + id, this.options1);
   }
 
-  getAllCategories() {}
+  getAllCategories() {
+    return this.http.get(environment.apiUrl + "admin/categories");
+  }
 }

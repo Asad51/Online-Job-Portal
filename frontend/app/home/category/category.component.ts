@@ -13,6 +13,13 @@ export class CategoryComponent implements OnInit {
   constructor(private jobService: JobService, private toastr: ToastrService) {}
 
   ngOnInit() {
-    this.jobService.getAllCategories();
+    this.jobService.getAllCategories().subscribe(
+      data => {
+        this.categories = data;
+      },
+      err => {
+        this.toastr.error(err.error["error"] || "Something went wrong.");
+      }
+    );
   }
 }

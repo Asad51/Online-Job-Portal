@@ -13,6 +13,7 @@ export class PostJobComponent implements OnInit {
   jobForm: FormGroup;
   jobTypes = ["full-time", "half-time", "intern", "hourly"];
   degrees = ["masters", "honors", "hsc", "ssc"];
+  jobCategories;
   experiences = [
     "No Experience",
     "Below 1 Year",
@@ -34,6 +35,7 @@ export class PostJobComponent implements OnInit {
       company: ["", [Validators.required]],
       vacancy: ["", [Validators.required]],
       type: ["", [Validators.required]],
+      category: ["", Validators.required],
       experience: ["", [Validators.required]],
       salary: ["0", [Validators.required, Validators.min(0)]],
       deadline: ["", Validators.required],
@@ -41,7 +43,16 @@ export class PostJobComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.jobService.getAllCategories().subscribe(
+      data => {
+        this.jobCategories = data;
+      },
+      err => {
+        this.errorHandler(err);
+      }
+    );
+  }
 
   onSubmitJobForm() {
     this.jobService.postJob(this.jobForm.value).subscribe(
@@ -78,6 +89,10 @@ export class PostJobComponent implements OnInit {
 
   get type() {
     return this.jobForm.get("type");
+  }
+
+  get category() {
+    return this.jobForm.get("category");
   }
 
   get experience() {

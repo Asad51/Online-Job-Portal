@@ -18,10 +18,12 @@ app.use('/public/uploads', express.static(path.join(__dirname, 'public/uploads')
 let errorsRoute = require('./routes/error.route');
 let jobSeekerRoute = require('./routes/job-seeker.route');
 let employerRoute = require('./routes/employer.route');
+let adminRoute = require('./routes/admin.route');
 let jobRoute = require('./routes/jobs.route');
 
 app.use('/user', jobSeekerRoute);
 app.use('/employer', employerRoute);
+app.use('/admin', adminRoute);
 app.use('/jobs', jobRoute);
 app.use(errorsRoute);
 

@@ -28,7 +28,7 @@ function isAdminAuthenticated(req, res, next) {
 }
 
 app.post("/add-admin", adminController.addAdmin);
-app.post("/login", isAdminAuthenticated, adminController.login);
+app.post("/login", adminController.login);
 app.get("/logout", isAdminAuthenticated, adminController.logout);
 
 app.post("/categories", isAdminAuthenticated, (req, res, next) => {
@@ -50,3 +50,5 @@ app.post("/categories", isAdminAuthenticated, (req, res, next) => {
     });
   });
 });
+
+module.exports = app;

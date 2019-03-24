@@ -2,6 +2,7 @@
   <p class="d-inline"><i class="fa fa-4x fa-tasks"></i></p>
   <div class="d-inline ml-2">
     <h4 class="text-center">Total Jobs</h4>
-    <div class="text-center">454</div>
+    <div class="text-center" *ngIf="jobs">{{ jobs.length }}</div>
+    <div class="text-center" *ngIf="!jobs">0</div>
   </div>
 </div>

@@ -39,6 +39,10 @@ export class EmployerService {
     );
   }
 
+  getAllEmployer() {
+    return this.httpClient.get(environment.apiUrl + "employer");
+  }
+
   getProfile() {
     return this.httpClient.get(
       environment.apiUrl + "employer/profile",

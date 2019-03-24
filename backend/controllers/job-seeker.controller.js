@@ -169,6 +169,17 @@ module.exports = {
     });
   },
 
+  getAllJobSeeker: (req, re, next) => {
+    User.find({}, (err, result) => {
+      if (err) {
+        return res.status(500).send({
+          error: "Server Error."
+        });
+      }
+      return (result);
+    });
+  },
+
   getProfile: async (req, res, next) => {
     User.findById(
       res.locals.id, {

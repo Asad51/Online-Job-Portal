@@ -40,6 +40,10 @@ export class UserService {
     );
   }
 
+  getAllUsers() {
+    return this.httpClient.get(environment.apiUrl + "user");
+  }
+
   getProfile() {
     return this.httpClient.get(
       environment.apiUrl + "user/profile",

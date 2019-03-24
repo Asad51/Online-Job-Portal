@@ -151,6 +151,18 @@ module.exports = {
     });
   },
 
+  getAllEmployer: (req, res, next) => {
+    Employer.find({}, (err, result) => {
+      if (err) {
+        res.status(500).send({
+          error: "Server Error"
+        });
+      } else {
+        res.status(200).send(result);
+      }
+    });
+  },
+
   getProfile: async (req, res, next) => {
     Employer.findById(res.locals.id, {
       username: 0,

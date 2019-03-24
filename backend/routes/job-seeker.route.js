@@ -38,6 +38,8 @@ function isUserAuthenticated(req, res, next) {
   });
 }
 
+app.get('/', jobSeekerController.getAllJobSeeker);
+
 app.post('/register', jobSeekerController.register);
 
 app.post('/login', jobSeekerController.login);

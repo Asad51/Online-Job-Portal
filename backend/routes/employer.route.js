@@ -38,6 +38,8 @@ function isEmployerAuthenticated(req, res, next) {
   });
 }
 
+app.get('/', employerController.getAllEmployer);
+
 app.post('/register', employerController.register);
 
 app.post('/login', employerController.login);

@@ -14,6 +14,13 @@ export class JobService {
       .append("__ex__", localStorage.getItem("__ex__"))
   };
 
+  jobFilter = {
+    title: "",
+    location: "",
+    category: "",
+    type: ""
+  };
+
   private options2: Object = {
     observe: "body",
     withCredentials: true,

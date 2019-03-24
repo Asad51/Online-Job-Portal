@@ -48,7 +48,7 @@ module.exports = {
           error: "Server Error."
         });
       }
-      res.status(201).send(result);
+      res.status(200).send(result);
     });
   },
 

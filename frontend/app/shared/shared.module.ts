@@ -6,9 +6,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "./material.module";
 import { ThirdPartyModule } from "./third-party-module";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { FilterPipe } from "./pipes/filter.pipe";
 
 @NgModule({
-  declarations: [PageNotFoundComponent],
+  declarations: [PageNotFoundComponent, FilterPipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -23,7 +24,8 @@ import { PageNotFoundComponent } from "./page-not-found/page-not-found.component
     ThirdPartyModule,
     MaterialModule,
     PageNotFoundComponent,
-    RouterModule
+    RouterModule,
+    FilterPipe
   ]
 })
 export class SharedModule {}

@@ -6,13 +6,19 @@
       </h2>
     </div>
     <div class="p-3 mt-5 bg-primary rounded">
-      <form class="mx-auto" (ngSubmit)="onSubmitSearchForm()">
+      <form [formGroup]="jobForm" class="mx-auto" (ngSubmit)="onSubmitSearchForm()">
         <div class="form-row">
           <div class="col-6 my-0">
-            <input type="text" placeholder="Enter Keywords" class="form-control" aria-label="Search" />
+            <input type="text" name="title" placeholder="Enter Keywords" class="form-control" aria-label="Search"
+              formControlName="title" />
           </div>
           <div class="col-5">
-            <input type="text" placeholder="Location" class="form-control" />
+            <select name="category" class="form-control" id="category" formControlName="category">
+              <option value="">None</option>
+              <option *ngFor="let category of categories" [value]="category.value">{{
+                  category.name
+                }}</option>
+            </select>
           </div>
           <div class="col">
             <button class="btn btn-info">Search</button>

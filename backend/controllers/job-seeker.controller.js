@@ -169,14 +169,14 @@ module.exports = {
     });
   },
 
-  getAllJobSeeker: (req, re, next) => {
+  getAllJobSeeker: (req, res, next) => {
     User.find({}, (err, result) => {
       if (err) {
         return res.status(500).send({
           error: "Server Error."
         });
       }
-      return (result);
+      return res.status(200).send(result);
     });
   },
 

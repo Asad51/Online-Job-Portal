@@ -1,3 +1,50 @@
-<p>
-  jobs works!
-</p>
+<div class="container-fluid">
+  <div class="row my-5">
+    <div class="col-3">
+      <h4 class="border-bottom border-success">Filter Properties</h4>
+      <label>Job Category</label>
+      <select class="form-control" (change)="onChange($event.target)" name="category" id="category">
+        <option value="">None</option>
+        <option *ngFor="let category of jobCategories" [value]="category.value" (input)="onChange($event).target">{{
+                  category.name
+                }}</option>
+      </select>
+
+      <label>Job Type</label>
+      <select class="form-control" (change)="onChange($event.target)" name="type" id="type">
+        <option value="">None</option>
+        <option *ngFor="let type of jobTypes" [value]="type" (input)="onChange($event).target">{{
+                  type | titlecase
+                }}</option>
+      </select>
+    </div>
+
+    <div class="col">
+      <div class="row">
+        <mat-form-field class="col-6">
+          <input name="title" matInput placeholder="Search By Title" (input)="onChange($event.target)">
+        </mat-form-field>
+        <mat-form-field class="col-6">
+          <input name="location" matInput placeholder="Search By location" (input)="onChange($event.target)">
+        </mat-form-field>
+      </div>
+      <div class="row" *ngIf="jobs">
+        <div class="col-md-6 col-sm-12 my-3" *ngFor="let job of jobs | filter:jobFilter['title']:'jobTitle' | filter:jobFilter['location']:'location' |
+          filter:jobFilter['category']:'category' | filter:jobFilter['type']:'type'">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title><a routerLink="jobs/{{job._id}}">{{ job.jobTitle }}</a></mat-card-title>
+              <mat-card-subtitle>{{ job.company }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="pl-3">Job Location : {{ job.location }}</div>
+              <div class="pl-3">Job Type : {{ job.type | titlecase }}</div>
+              <div class="pl-3">Deadline: {{ job.deadline }}</div>
+              <button mat-raised-button color="primary" class="ml-3">Apply</button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

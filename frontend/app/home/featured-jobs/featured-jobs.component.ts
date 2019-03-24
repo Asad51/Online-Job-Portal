@@ -27,6 +27,7 @@ export class FeaturedJobsComponent implements OnInit {
         });
       },
       err => {
+        console.log(err);
         this.errHandler(err);
       }
     );

@@ -14,7 +14,6 @@ export class TotalUsersComponent implements OnInit {
     this.userService.getAllUsers().subscribe(
       data => {
         this.users = data;
-        console.log(data);
       },
       err => {
         console.log(err);
